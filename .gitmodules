@@ -1,0 +1,12 @@
+[submodule "dependencies/range-v3-adapter"]
+	path = dependencies/range-v3-adapter
+	url = https://github.com/njoy/range-v3-adapter.git
+[submodule "dependencies/Log"]
+	path = dependencies/Log
+	url = https://github.com/njoy/Log.git
+[submodule "dependencies/dimwits"]
+	path = dependencies/dimwits
+	url = https://github.com/njoy/DimensionalAnalysis.git
+[submodule "dependencies/variant-adapter"]
+	path = dependencies/variant-adapter
+	url = https://github.com/njoy/variant-adapter.git
