@@ -66,7 +66,6 @@ Where reasonable, defaults are provided for common options
    * + when a discontinuity policy is unspecified, left preference is used
    */
   auto myTable = table::make< LinearLinear >( std::move(xGrid), std::move(yGrid) );
-
   std::cout << myTable( 2.5 ) << std::endl;
 ```
 
@@ -137,7 +136,7 @@ Output
 
 ### Example 4: Hashed Lookup
 
-For strictly positive independent value grids, table searches performance may
+For strictly positive independent value grids, table search performance may
 be dramatically improved using a hash-based lookup.
 
 ```c++
