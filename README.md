@@ -209,8 +209,6 @@ a range of values over which the interpolation scheme varies.
   using Partition =
     decltype( xGrid | ranges::view::drop_exactly(0) | ranges::view::take_exactly(0) );
 
-  Table< table::Type<> > 
-
   using Law1 =
     decltype( table::make< Histogram >( std::declval<Partition>(),
                                         std::declval<Partition>() ) );
