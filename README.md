@@ -5,7 +5,7 @@ Interpolation
 Minimal Example
 ----------------
 
-### Example 1
+### Example 1: A simple table
 
 The interpolation library provides considerable configurable interpolation table types.
 Where possible, helper methods provide type deduction to reduce verbosity.
@@ -14,10 +14,8 @@ Where possible, helper methods provide type deduction to reduce verbosity.
 #include <iostream>
 #include <vector>
 
-#include "dimwits.hpp"
 #include "interpolation.hpp"
 
-using namespace dimwits;
 using namespace njoy::interpolation;
 
 int main(){
@@ -54,7 +52,7 @@ Output
 1 3
 ```
 
-### Example 2
+### Example 2: Defaulted behavior
 
 Where reasonable, defaults are provided for common options
 
@@ -76,15 +74,103 @@ Output
 6
 ```
 
-### Example 3
+### Example 3: Cached Lookup
+
+There sometimes arise occasions in which subsequent table evaluations interpolate
+within the same grid bin. Alternatively, it might be useful to evaluate multiple
+tables tabulated upon the same independent value grid. In these cases, repeatedly
+searching the table would be wasteful. The address this redunancy, many tables
+provide a `cachedSearch` method. This method returns an object which can be passed
+as a second argument during interpolation calls to eliminate unnecessary searches,
+provided subsequent searches operate on a shared x-grid.
+
+```c++
+#include <iostream>
+#include <vector>
+
+#include "interpolation.hpp"
+
+using namespace njoy::interpolation;
+
+int main(){
+
+  auto viewOf = []( const auto& range ){
+    return ranges::make_iterator_range( range.begin(), range.end() );
+  }
+  
+  std::vector< double > xGrid{ 1.0, 2.0, 3.0, 4.0, 5.0 };
+  std::vector< double > y1Grid = { 3.0, 5.0, 7.0, 9.0, 11.0 };
+  std::vector< double > y2Grid = { 9.0, 7.0, 3.0, 5.0,  7.0 };
+
+  auto partialXGrid = viewOf(xGrid) | ranges::view::drop_exactly(2);
+  std::vector< double > y3Grid = { 7.0, 5.0, 3.0 }; 
+
+  auto table1 = table::make< LinearLinear >( viewOf(xGrid), std::move(y1Grid) );
+  auto table2 = table::make< LinearLinear >( viewOf(xGrid), std::move(y2Grid) );
+  auto table3 = table::make< LinearLinear >( partialXGrid, std::move(y3Grid) );
+
+  auto search = table1.cachedSearch();
+  std::cout << table1( 3.5, search ) << std::endl;
+  std::cout << table1( 3.75, search ) << std::endl; // cached search
+
+  std::cout << table2( 3.5, search ) << std::endl; // also cached search
+
+  std::cout << table3( 3.5, search ) << std::endl; // also cached search
+  std::cout << table3( 4.5, search ) << std::endl; // new search
+
+  std::cout << table1( 4.75, search ) << std::endl; // also cached
+}  
+```
+
+Output
+
+```
+  8
+  8.5
+  4
+  6
+  4
+  10.5
+```
+
+### Example 4: Hashed Lookup
+
+For strictly positive independent value grids, table searches performance may
+be dramatically improved using a hash-based lookup.
+
+```c++
+  /* given the setup code in Example 1 */
+
+  /* As in example 1, the search method is specified. In this example,
+   * a hash function is used to narrow the searched space, which is then
+   * refined to a single bin using binary search.
+   */
+  auto myTable =
+  table::make< LinearLinear,
+               search::Hashed<Binary> >( std::move(xGrid), std::move(yGrid) );
+
+  std::cout << myTable( 2.5 ) << std::endl;
+```
+
+Output
+
+```
+6
+```
+
+### Example 5: Generality
 
 Interpolation tables are generic with respect to data and range types.
 In this example, we leverage data types provided by the dimwits library and
 range types provided by the Range V3 library.
 
 ```c++
+#include "dimwits.hpp"
+
   /* given the setup code in Example 1 */
-  
+
+  using namespace dimwits;
+
   auto energy = xGrid
     | ranges::view::transform( []( auto&& arg ){ return arg * electronVolts; } );
 
@@ -105,7 +191,7 @@ Output
  6 b
 ```
 
-### Example 4
+### Example 6: Decoration
 
 Interpolation tables can decorated to specify addition behavior.
 
@@ -165,7 +251,7 @@ Output
 [info] Right domain limit: 10
 ```
 
-### Example 5
+### Example 7: Variants
 
 The inteperpolation library provides an efficient `Variant` class template.
 The `Variant` provides the same interface as its parameter types but does not
@@ -196,13 +282,24 @@ Output
 6
 ```
 
-### Example 6
+### Example 8: Vectors
 
 The inteperpolation library provides a composite table called a `Vector`.
 This is useful when used in conjunction with the `Variant` to describe
 a range of values over which the interpolation scheme varies.
 
 ```c++
+#include <iostream>
+#include <vector>
+
+#include "dimwits.hpp"
+#include "interpolation.hpp"
+
+using namespace dimwits;
+using namespace njoy::interpolation;
+
+int main(){
+
   std::vector< double > xGrid = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0 };
   std::vector< double > yGrid = { 3.0, 5.0, 7.0, 6.0, 2.0, 9.0, 8.0, 5.0, 1.0,  0.0 };
 
@@ -246,6 +343,7 @@ a range of values over which the interpolation scheme varies.
   Tab1 myTable( std::move(core) );
 
   std::cout << myTable( 2.5 ) << std::endl;
+}
 ```
 
 Output
