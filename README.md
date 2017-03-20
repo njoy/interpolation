@@ -9,8 +9,8 @@ Representative Examples
 
 ### Example 1: A simple table
 
-The interpolation library provides considerable configurable interpolation table types.
-Where possible, helper methods provide type deduction to reduce verbosity.
+The interpolation library provides configurable interpolation table types.
+Where possible, helper functions provide type deduction to reduce verbosity.
 
 ```c++
 #include <iostream>
