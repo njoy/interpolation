@@ -4,11 +4,6 @@ struct Vector;
 template< typename TableType >
 struct Vector< TableType, Adjoining > {
 
-  static_assert( not TableType::specifiesLeftInterval(), "" );
-  static_assert( not TableType::specifiesRightInterval(), "" );
-  static_assert( not TableType::specifiesDomainMin(), "" );
-  static_assert( not TableType::specifiesDomainMax(), "" );
-
   using ComponentXrange = decltype( std::declval< TableType >().x() );
   using ComponentYrange = decltype( std::declval< TableType >().y() );
   

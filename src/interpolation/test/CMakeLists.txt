@@ -1,4 +1,12 @@
 add_executable( interpolation.test
+                Example1.cpp 
+                Example2.cpp 
+                Example3.cpp 
+                Example4.cpp 
+                Example5.cpp 
+                Example6.cpp 
+                Example7.cpp 
+                Example8.cpp 
                 #benchmark.cpp
                 demo.cpp )
 set( test_flags ${interpolation_compiler_flags} )

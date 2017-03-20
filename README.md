@@ -99,7 +99,7 @@ int main(){
     return ranges::make_iterator_range( range.begin(), range.end() );
   };
   
-  std::vector< double > xGrid{ 1.0, 2.0, 3.0, 4.0, 5.0 };
+  std::vector< double > xGrid  = { 1.0, 2.0, 3.0, 4.0,  5.0 };
   std::vector< double > y1Grid = { 3.0, 5.0, 7.0, 9.0, 11.0 };
   std::vector< double > y2Grid = { 9.0, 7.0, 3.0, 5.0,  7.0 };
 
@@ -211,12 +211,12 @@ struct Ten {
   
   auto myTable =
     table::make< LinearLinear,
-                 domain::min::IsRuntimeConstant,
-                 domain::max::IsCompiletimeConstant<Ten>,
-                 left::interval::IsCompiletimeConstant<Zero>,
-                 right::interval::Throws >( 0.0, // domain min
-                                            std::move(xGrid),
-                                            std::move(yGrid) );
+                 table::domain::min::IsRuntimeConstant,
+                 table::domain::max::IsCompiletimeConstant<Ten>,
+                 table::left::interval::IsCompiletimeConstant<Zero>,
+                 table::right::interval::Throws >( 0.0, // domain min
+                                                   std::move(xGrid),
+                                                   std::move(yGrid) );
 
   std::cout << myTable( 2.5 ) << std::endl;
   std::cout << myTable.domainMin() << ' ' << myTable.domainMax() << std::endl;
@@ -291,10 +291,8 @@ a range of values over which the interpolation scheme varies.
 #include <iostream>
 #include <vector>
 
-#include "dimwits.hpp"
 #include "interpolation.hpp"
 
-using namespace dimwits;
 using namespace njoy::interpolation;
 
 int main(){
@@ -336,7 +334,7 @@ int main(){
   };
 
   std::vector< ENDFvariant > core;
-  core.push_back( Law1( partition( xGrid, 0, 3 ), partition( yGrid, 0, 3 ) ) );
+  core.push_back( Law2( partition( xGrid, 0, 3 ), partition( yGrid, 0, 3 ) ) );
   core.push_back( Law5( partition( xGrid, 2, 4 ), partition( yGrid, 2, 4 ) ) );
   core.push_back( Law3( partition( xGrid, 5, 5 ), partition( yGrid, 5, 5 ) ) );
   Tab1 myTable( std::move(core) );

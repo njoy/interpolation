@@ -1,4 +1,4 @@
-Vector( std::vector< TableType >&& data ) : core( std::move(data) ){
+Vector( std::vector< TableType >&& data ) : core( std::move(data) ){  
   const auto left = 
     ranges::adjacent_find( this->core, []( const auto& left, const auto& right ){
 	return left.x().back() != right.x().front(); } );
