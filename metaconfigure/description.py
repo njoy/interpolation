@@ -61,6 +61,8 @@ def reconstruct_build_queue( state ):
     queue = []
     graph = reconstruct_dependency_graph( state )
     while len( graph ) > 0:
+        print( graph )
+        print( queue )
         found_next = False
         next_node = None
         for node, edges in graph.items():

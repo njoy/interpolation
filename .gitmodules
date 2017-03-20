@@ -10,3 +10,6 @@
 [submodule "dependencies/variant-adapter"]
 	path = dependencies/variant-adapter
 	url = https://github.com/njoy/variant-adapter.git
+[submodule "dependencies/header-utilities"]
+	path = dependencies/header-utilities
+	url = https://github.com/njoy/header-utilities.git
