@@ -97,7 +97,7 @@ int main(){
 
   auto viewOf = []( const auto& range ){
     return ranges::make_iterator_range( range.begin(), range.end() );
-  }
+  };
   
   std::vector< double > xGrid{ 1.0, 2.0, 3.0, 4.0, 5.0 };
   std::vector< double > y1Grid = { 3.0, 5.0, 7.0, 9.0, 11.0 };
@@ -149,7 +149,8 @@ be dramatically improved using a hash-based lookup.
    */
   auto myTable =
   table::make< LinearLinear,
-               search::Hashed<Binary> >( std::move(xGrid), std::move(yGrid) );
+               table::search::Hashed<Binary> >( std::move(xGrid),
+                                                std::move(yGrid) );
 
   std::cout << myTable( 2.5 ) << std::endl;
 ```
