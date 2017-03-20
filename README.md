@@ -1,8 +1,10 @@
-Interpolation
+njoy::interpolation
 =========
 
+`interpolation` is a header-only C++ library providing generic classes for interpolation
+of one dimensional data.
 
-Minimal Example
+Representative Examples
 ----------------
 
 ### Example 1: A simple table
@@ -253,7 +255,7 @@ Output
 
 ### Example 7: Variants
 
-The inteperpolation library provides an efficient `Variant` class template.
+The interpolation library provides an efficient `Variant` class template.
 The `Variant` provides the same interface as its parameter types but does not
 incur virtualization and heap allocation overhead.
 
