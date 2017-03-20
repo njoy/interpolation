@@ -209,12 +209,12 @@ struct Ten {
   
   auto myTable =
     table::make< LinearLinear,
-                 left::interval::IsCompiletimeConstant<Zero>,
-                 right::interval::Throws,
                  domain::min::IsRuntimeConstant,
-                 domain::max::IsCompiletimeConstant<Ten> >( 0.0, // domain min
-                                                            std::move(xGrid),
-                                                            std::move(yGrid) );
+                 domain::max::IsCompiletimeConstant<Ten>,
+                 left::interval::IsCompiletimeConstant<Zero>,
+                 right::interval::Throws >( 0.0, // domain min
+                                            std::move(xGrid),
+                                            std::move(yGrid) );
 
   std::cout << myTable( 2.5 ) << std::endl;
   std::cout << myTable.domainMin() << ' ' << myTable.domainMax() << std::endl;
@@ -261,10 +261,6 @@ incur virtualization and heap allocation overhead.
 ```c++
   /* given the setup code in Example 1 */
 
-  /* The `make` helper provides default for common choices
-   * + when a search policy is unspecified, binary search is used
-   * + when a discontinuity policy is unspecified, left preference is used
-   */
   using Law2 =
     decltype( table::make< LinearLinear >( std::move(xGrid), std::move(yGrid) ) );
 
