@@ -108,7 +108,8 @@ int main(){
 
   auto table1 = table::make< LinearLinear >( viewOf(xGrid), std::move(y1Grid) );
   auto table2 = table::make< LinearLinear >( viewOf(xGrid), std::move(y2Grid) );
-  auto table3 = table::make< LinearLinear >( partialXGrid, std::move(y3Grid) );
+  auto table3 =
+    table::make< LinearLinear >( std::move(partialXGrid), std::move(y3Grid) );
 
   auto search = table1.cachedSearch();
   std::cout << table1( 3.5, search ) << std::endl;
