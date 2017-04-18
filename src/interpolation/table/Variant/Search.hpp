@@ -70,7 +70,7 @@ class Search {
       Type( Type& ) = default;
       Type( const Type& ) = default;
 
-      template< typename... Args >
+      template< typename Arg >
       Type& operator=( const Arg& arg ){ this->core = arg; }
       Type& operator=( Type& ) = default;
       Type& operator=( const Type& ) = default;

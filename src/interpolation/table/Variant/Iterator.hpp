@@ -15,8 +15,7 @@ class Iterator {
   ( deduce
     ( hana::to_tuple
       ( hana::fold
-	( hana::make_tuple
-	  ( std::declval< hana::basic_type<Ts> >()... ),
+	( hana::make_tuple( std::declval< hana::basic_type< std::decay_t<Ts> > >()... ),
 	  hana::make_set(), hana::insert ) ) ) )
   deduce();
 
@@ -37,6 +36,45 @@ class Iterator {
 
     class Type {
       Core core;
+      /* what the hell is this ignoramus doing with workaround? */
+      /** 
+       * In the late October update to the variant implementation posted on 
+       * anthony william's bitbucket, the visitation method was modified to
+       * better account for const lvalue references and rvalue references.
+       *
+       * Unfortunately, following these changes, the clang compiler inexplicitly
+       * calls the wrong 'trampoline` when resolving the overload. As currently
+       * ordered, when the constant lvalue overloads are called in place of 
+       * the mutable lvalue reference overloads. This work arounds simply applies
+       * a const const to avoid the issue.
+       */
+      template< typename U >
+      static decltype(auto) workaround( U&& t ){
+	return const_cast< std::decay_t< decltype(t) >& >(t);
+      }
+      
+      Type& preincrement(){
+	std::visit( []( auto&& self ){ ++( workaround(self) ); }, this->core );
+	return *this;
+      }
+    
+      Type postincrement(){
+	auto value = *this;
+	std::visit( []( auto&& self ){ ++( workaround(self) ); }, this->core );
+	return value;
+      }
+
+      Type& predecrement(){
+	std::visit( []( auto&& self ){ --( workaround(self) ); }, this->core );
+	return *this;
+      }
+    
+      Type postdecrement(){
+	auto value = *this;
+	std::visit( []( auto&& self ){ --( workaround(self) ); }, this->core );
+	return value;
+      }
+      /*
       Type& preincrement(){
 	std::visit( []( auto& self ){ ++self; }, this->core );
 	return *this;
@@ -58,7 +96,7 @@ class Iterator {
 	std::visit( []( auto& self ){ --self; }, this->core );
 	return value;
       }
-      
+      */
     public:
       using iterator_category = std::random_access_iterator_tag;
       using value_type = std::remove_reference_t< decltype( *( std::declval<T>() ) ) >;
@@ -86,10 +124,10 @@ class Iterator {
 	return not (*this == other);
       }
       
-      Type& operator++() { return this->preincrement(); }
-      Type operator++( int ) { return this->postincrement(); }
-      Type& operator--() { return this->predecrement(); }
-      Type operator--( int ) { return this->postdecrement(); }
+      Type& operator++(){ return this->preincrement(); }
+      Type operator++( int ){ return this->postincrement(); }
+      Type& operator--(){ return this->predecrement(); }
+      Type operator--( int ){ return this->postdecrement(); }
 
       Type& operator+=( difference_type diff ) {
 	std::visit( [&]( const auto& core ){ return  core += diff; },
@@ -207,7 +245,7 @@ class Iterator {
       Type( Type&& ) = default;
       Type( const Type& ) = default;
 
-      template< typename... Args >
+      template< typename Arg >
       Type& operator=( const Arg& arg ){ this->core = arg; }
       Type& operator=( Type& ) = default;
       Type& operator=( Type&& ) = default;

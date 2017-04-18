@@ -52,20 +52,20 @@ SCENARIO("An variant interpolation table can be constructed"){
     
     GIVEN("Variants with distinct underlying data types"){
       using Law2 = Table< table::Type< LinearLinear,
-				       table::search::Binary,
-				       table::discontinuity::TakeLeft, 
-				       std::vector< double >,
-				       std::vector< double > > >;
+    				       table::search::Binary,
+    				       table::discontinuity::TakeLeft, 
+    				       std::vector< double >,
+    				       std::vector< double > > >;
       
       using Law5 = Table< table::Type< LogarithmicLogarithmic,
-				       table::search::Binary,
-				       table::discontinuity::TakeLeft, 
-				       std::array< double, 3 >,
-				       std::array< double, 3 > > >;
+    				       table::search::Binary,
+    				       table::discontinuity::TakeLeft, 
+    				       std::array< double, 3 >,
+    				       std::array< double, 3 > > >;
 
       Table< table::Variant< Law2, Law5 > >
-	myTable( Law2( njoy::utility::copy(xGrid),
-		       njoy::utility::copy(yGrid) ) );
+    	myTable( Law2( njoy::utility::copy(xGrid),
+    		       njoy::utility::copy(yGrid) ) );
 
       bool correct;
       
