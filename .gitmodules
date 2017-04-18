@@ -1,6 +1,3 @@
-[submodule "dependencies/range-v3-adapter"]
-	path = dependencies/range-v3-adapter
-	url = https://github.com/njoy/range-v3-adapter.git
 [submodule "dependencies/Log"]
 	path = dependencies/Log
 	url = https://github.com/njoy/Log.git
