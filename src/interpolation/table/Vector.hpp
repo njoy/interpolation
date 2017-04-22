@@ -58,6 +58,11 @@ public:
   
     return (*iterator)( std::forward<Arg>(x), std::forward<Args>(args)... );
   }
+
+  auto cachedSearch() const {
+    return this->core.front().cachedSearch();
+  }
+  
 };
 
 #include "interpolation/table/Vector/Table.hpp"

@@ -394,11 +394,15 @@
     "src/interpolation/table/domain/min/IsCompiletimeConstant.hpp",
     "src/interpolation/table/domain/min/IsRuntimeConstant.hpp",
     "src/interpolation/table/left/interval.hpp",
+    "src/interpolation/table/left/interval/Asymptotic.hpp",
+    "src/interpolation/table/left/interval/IsAsymptotic.hpp",
     "src/interpolation/table/left/interval/IsCompiletimeConstant.hpp",
     "src/interpolation/table/left/interval/IsRuntimeConstant.hpp",
     "src/interpolation/table/left/interval/IsRuntimeValue.hpp",
     "src/interpolation/table/left/interval/Throws.hpp",
     "src/interpolation/table/right/interval.hpp",
+    "src/interpolation/table/right/interval/Asymptotic.hpp",
+    "src/interpolation/table/right/interval/IsAsymptotic.hpp",
     "src/interpolation/table/right/interval/IsCompiletimeConstant.hpp",
     "src/interpolation/table/right/interval/IsRuntimeConstant.hpp",
     "src/interpolation/table/right/interval/IsRuntimeValue.hpp",
@@ -504,6 +508,9 @@
     "interpolation.table.domain.min.IsRuntimeConstant": [
       "src/interpolation/table/domain/min/IsRuntimeConstant/test/IsRuntimeConstant.test.cpp"
     ],
+    "interpolation.table.left.interval.IsAsymptotic": [
+      "src/interpolation/table/left/interval/IsAsymptotic/test/IsAsymptotic.test.cpp"
+    ],
     "interpolation.table.left.interval.IsCompiletimeConstant": [
       "src/interpolation/table/left/interval/IsCompiletimeConstant/test/IsCompiletimeConstant.test.cpp"
     ],
@@ -515,6 +522,9 @@
     ],
     "interpolation.table.make": [
       "src/interpolation/table/make/test/make.test.cpp"
+    ],
+    "interpolation.table.right.interval.IsAsymptotic": [
+      "src/interpolation/table/right/interval/IsAsymptotic/test/IsAsymptotic.test.cpp"
     ],
     "interpolation.table.right.interval.IsCompiletimeConstant": [
       "src/interpolation/table/right/interval/IsCompiletimeConstant/test/IsCompiletimeConstant.test.cpp"

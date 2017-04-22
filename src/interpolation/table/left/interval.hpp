@@ -27,5 +27,6 @@ namespace interval {
 #include "interpolation/table/left/interval/Throws.hpp"
 #include "interpolation/table/left/interval/IsRuntimeConstant.hpp"
 #include "interpolation/table/left/interval/IsCompiletimeConstant.hpp"
+#include "interpolation/table/left/interval/IsAsymptotic.hpp"
 
 }

@@ -5,6 +5,19 @@ namespace table {
 
 struct Tag{};
 
+template< typename T, typename = void >
+struct HasSearch{
+  static constexpr bool value = false;
+};
+
+template< typename T >
+struct HasSearch< T, utility::void_t< decltype( std::declval<T>().search() ) > >{
+  static constexpr bool value = true;
+};
+
+template< typename T >
+constexpr bool hasSearch = HasSearch<T>::value;
+
 template< typename... Args > class Make;
 #include "interpolation/table/Implementation.hpp"
 

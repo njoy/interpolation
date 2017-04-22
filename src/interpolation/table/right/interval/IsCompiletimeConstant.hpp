@@ -14,7 +14,7 @@ struct IsCompiletimeConstant {
     
     template< typename... Args >
     Type( Args&&... args ) :
-      Interval<Parent>( std::forward< Args >( args )... ){}
+      Interval< Parent >( std::forward< Args >( args )... ){}
   };
   
 };

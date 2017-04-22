@@ -22,8 +22,8 @@ Type( Xrange&& xRange, Yrange&& yRange ) :
       const auto position  = ranges::distance( this->xRange.begin(), xIterator );
       Log::error( "Unsorted values encountered in x-value grid" );
       Log::info( "Position of out-of-order value: {}", position );
-      // Log::info( "X-value[ {} ] : {}", position - 1, *ranges::prev( xIterator ) );
-      // Log::info( "X-value[ {} ] : {}", position, *xIterator );
+      Log::info( "X-value[ {} ] : {}", position - 1, *ranges::prev( xIterator ) );
+      Log::info( "X-value[ {} ] : {}", position, *xIterator );
       throw std::runtime_error("Unsorted values encountered in x-value grid");
     }
 
