@@ -13,11 +13,12 @@ public:
     if ( (*left < value) and (value < *right) ){
       return this->right;
     }
-    this->right = core.apply( std::forward<Range>(range),
-			      std::forward<Value>(value),
-			      std::forward<Args>(args)... );
+    auto iter = core.apply( std::forward<Range>(range),
+			    std::forward<Value>(value),
+			    std::forward<Args>(args)... );
+    this->right = ( iter == range.begin() ) ? ranges::next(iter) : iter;
     this->left = ranges::prev( this->right );
-    return this->right;
+    return iter;
   }
 
 };
