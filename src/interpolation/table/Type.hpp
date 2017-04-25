@@ -28,7 +28,9 @@ public:
   auto cachedSearch() const {
     using Iterator =
       std::decay_t< decltype( std::declval<const Xrange>().begin() ) >;
-    return Search< Cached, Iterator, const SearchAlgorithm& >( this->xRange.begin(), this->xRange.begin(), this->search() );
+    return Search< Cached, Iterator, SearchAlgorithm >( this->xRange.begin(),
+							this->xRange.begin(),
+							this->search() );
   } 
 
   Xdata tableMin() const { return this->xRange.front(); }

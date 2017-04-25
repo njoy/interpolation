@@ -26,7 +26,7 @@ SCENARIO("The LinearLogarithmic interpolant computes the correct inversion",
   auto iterator = xValues.begin();
   auto last = std::prev( xValues.end() );
   do {
-    double xLeft = *iterator, xRight = *std::next( iterator );
+    double xLeft = *iterator, xRight = iterator[1];
     double y1Left = f1( xLeft ), y1Right = f1( xRight );
     double y2Left = f2( xLeft ), y2Right = f2( xRight );
     double y3Left = f3( xLeft ), y3Right = f3( xRight );
@@ -74,9 +74,8 @@ SCENARIO("LogarithmicLogarithmic computes the correct inversion with units",
   auto iterator = units.begin();
   auto last = units.end();
   do {
-    auto xLeft = *iterator, xRight = *std::next( iterator );
+    auto xLeft = *iterator, xRight = iterator[1];
     auto yLeft = f( xLeft ), yRight = f( xRight );
-    auto xBar = avg( xLeft, xRight );
 
     REQUIRE( not excessiveError( xRight,
 				 LogarithmicLogarithmic::invert
