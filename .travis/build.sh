@@ -11,14 +11,14 @@ if [ "$TRAVIS_OS_NAME" = "linux" ]; then
   else
     export CUSTOM='-D link_time_optimization=ON'
   fi;
-  if [ "$build_type" = "coverage" ]; then
-    export build_type=DEBUG
-    export coverage=true
-    export CUSTOM="$CUSTOM -D coverage=ON"
-  else
-    export coverage=false
-  fi;  
 fi
+if [ "$build_type" = "coverage" ]; then
+  export build_type=DEBUG
+  export coverage=true
+  export CUSTOM="$CUSTOM -D coverage=ON"
+else
+  export coverage=false
+fi;  
 
 mkdir build
 cd build
