@@ -57,12 +57,12 @@ SCENARIO("An interpolation table can be constructed with transforms"){
 	
 	ranges::for_each( ranges::view::zip( reference.x(), trial.x() ),
 			  []( auto&& pair ){
-			    REQUIRE( std::get<0>(pair) == std::get<1>(pair) );
+			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );
 
 	ranges::for_each( ranges::view::zip( reference.y(), trial.y() ),
 			  []( auto&& pair ){
-			    REQUIRE( std::get<0>(pair) == std::get<1>(pair) );
+			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );
       }
 
@@ -139,12 +139,12 @@ SCENARIO("Transforms can change the input and output types"){
 	
 	ranges::for_each( ranges::view::zip( reference.x(), trial.x() ),
 			  []( auto&& pair ){
-			    REQUIRE( std::get<0>(pair) == std::get<1>(pair) );
+			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );
 
 	ranges::for_each( ranges::view::zip( reference.y(), trial.y() ),
 			  []( auto&& pair ){
-			    REQUIRE( std::get<0>(pair) == std::get<1>(pair) );
+			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );
       }
     }
