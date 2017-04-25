@@ -106,7 +106,7 @@ struct ApplyUnit{
   constexpr auto
   operator()( Magnitude&& magnitude ) const {
     return apply( std::forward<Magnitude>(magnitude) );
-  };
+  }
 };
 
 template< typename Unit >
