@@ -145,6 +145,15 @@ public:
     return std::visit( [&]( auto&& core ){ return Result(core.search()); },
 		       this->core );
   }
+
+  auto cachedSearch() const {
+    using Result = 
+      typename variant::Search
+      < decltype( std::declval<TableType>().cachedSearch() ),
+	decltype( std::declval<TableTypes>().cachedSearch() )... >::Type;
+    return std::visit( [&]( auto&& core ){ return Result(core.cachedSearch()); },
+		       this->core );
+  }
 };
 
 #include "interpolation/table/Variant/Table.hpp"
