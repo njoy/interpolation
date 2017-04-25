@@ -31,7 +31,7 @@ struct LinearLogarithmic : public Interpolant {
       if ( it == ranges::prev( range.end() ) ){ it = ranges::prev(it); }
       const auto position = std::distance( range.begin(), it );
       Log::info( "X-value[ {} ]: {}", position, *it );
-      Log::info( "X-value[ {} ]: {}", position + 1, *std::next(it) );
+      Log::info( "X-value[ {} ]: {}", position + 1, *(++it) );
       throw std::logic_error( "Encountered zero in function value of linear-logarithmic interpolation region" );
     }
   }

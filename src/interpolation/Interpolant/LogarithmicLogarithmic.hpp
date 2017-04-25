@@ -30,7 +30,7 @@ struct LogarithmicLogarithmic : public Interpolant {
       if ( it == ranges::prev( range.end() ) ){ it = ranges::prev(it); }
       const auto position = std::distance( range.begin(), it );
       Log::info(  "X-value[ {} ]: {}", position, *it );
-      Log::info(  "X-value[ {} ]: {}", position + 1, *std::next(it) );
+      Log::info(  "X-value[ {} ]: {}", position + 1, *(++it) );
       throw std::logic_error( "Encountered zero in function value of logarithmic-logarithmic interpolation region" );
     }
   }
@@ -45,7 +45,7 @@ struct LogarithmicLogarithmic : public Interpolant {
       if ( it == ranges::prev( range.end() ) ){ it = ranges::prev(it); }
       const auto position = std::distance( range.begin(), it );
       Log::info( "Y-value[ {} ]: {}", position, *it );
-      Log::info(  "Y-value[ {} ]: {}", position + 1, *std::next(it) );
+      Log::info(  "Y-value[ {} ]: {}", position + 1, *(++it) );
       throw std::logic_error( "Encountered zero in function value of logarithmic-logarithmic interpolation region" );
     }
   }

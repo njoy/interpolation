@@ -24,7 +24,7 @@ SCENARIO("The LinearLogarithmic interpolant computes the correct value",
   auto iterator = xValues.begin();
   auto last = std::prev( xValues.end() );
   do {
-    double xLeft = *iterator, xRight = *std::next( iterator );
+    double xLeft = *iterator, xRight = *( ++iterator );
     double y1Left = f1( xLeft ), y1Right = f1( xRight );
     double y2Left = f2( xLeft ), y2Right = f2( xRight );
     double xBar = avg( xLeft, xRight );
@@ -42,7 +42,7 @@ SCENARIO("The LinearLogarithmic interpolant computes the correct value",
     REQUIRE( not excessiveError( f2( xBar ),
                                  LinearLogarithmic::apply
                                  ( xBar, xLeft, xRight, y2Left, y2Right ) ) );
-  } while( ++iterator != last );
+  } while( iterator != last );
 }
 
 SCENARIO("The LinearLogarithmic interpolant computes is compatible with units",
@@ -67,7 +67,7 @@ SCENARIO("The LinearLogarithmic interpolant computes is compatible with units",
   auto iterator = units.begin();
   auto last = units.end();
   do {
-    auto xLeft = *iterator, xRight = *std::next( iterator );
+    auto xLeft = *iterator, xRight = *( ++iterator );
     auto y1Left = f1( xLeft ), y1Right = f1( xRight );
     auto y2Left = f2( xLeft ), y2Right = f2( xRight );
     auto xBar = avg( xLeft, xRight );
@@ -85,5 +85,5 @@ SCENARIO("The LinearLogarithmic interpolant computes is compatible with units",
     REQUIRE( not excessiveError( f2( xBar ),
                                  LinearLogarithmic::apply
                                  ( xBar, xLeft, xRight, y2Left, y2Right ) ) );
-  } while( ++iterator != last );
+  } while( iterator != last );
 }

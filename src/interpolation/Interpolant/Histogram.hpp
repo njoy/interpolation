@@ -14,7 +14,7 @@ struct Histogram : public Interpolant {
       if ( it == ranges::prev(range.end()) ){ it = ranges::prev(range.end()); }
       const auto position = std::distance( range.begin(), it );
       Log::info( "X-value[ {} ]: {}", position, *it ); 
-      Log::info( "X-value[ {} ]: {}", position + 1, *std::next(it) );
+      Log::info( "X-value[ {} ]: {}", position + 1, *(++it) );
       throw std::logic_error( "Encountered coincident values in x-value grid of histogram" );
     }
   }

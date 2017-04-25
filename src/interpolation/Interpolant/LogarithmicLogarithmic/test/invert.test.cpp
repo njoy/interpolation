@@ -58,7 +58,6 @@ SCENARIO("LogarithmicLogarithmic computes the correct inversion with units",
          "[interpolant], [LogarithmicLogarithmic]"){
   std::vector<double> xValues {100, 10, 1, 1E-1, 1E-2};
   auto f = []( auto x ){ return 5.0 * std::pow(x.value,2) * barn; };
-  auto avg = []( auto xLeft, auto xRight ){ return 0.5 * ( xLeft + xRight ); };
 
   auto excessiveError =
     []( auto reference, auto trial ){

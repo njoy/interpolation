@@ -26,7 +26,7 @@ SCENARIO("The LogarithmicLogarithmic interpolant computes the correct value",
   auto iterator = xValues.begin();
   auto last = std::prev( xValues.end() );
   do {
-    double xLeft = *iterator, xRight = *std::next( iterator );
+    double xLeft = *iterator, xRight = *( ++iterator );
     double y1Left = f1( xLeft ), y1Right = f1( xRight );
     double y2Left = f2( xLeft ), y2Right = f2( xRight );
     double y3Left = f3( xLeft ), y3Right = f3( xRight );
@@ -66,5 +66,5 @@ SCENARIO("The LogarithmicLogarithmic interpolant computes the correct value",
     REQUIRE( not excessiveError( f5( xBar ),
                                  LogarithmicLogarithmic::apply
                                  ( xBar, xLeft, xRight, y5Left, y5Right ) ) );
-  } while( ++iterator != last );  
+  } while( iterator != last );  
 }
