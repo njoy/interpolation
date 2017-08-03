@@ -47,7 +47,8 @@ SCENARIO("An variant interpolation table can be constructed"){
       Law2 law2( njoy::utility::copy(xGrid), njoy::utility::copy(yGrid) );
       Law5 law5( njoy::utility::copy(xGrid), njoy::utility::copy(yGrid) );
 
-      myTable = law2;
+      Table< table::Variant< Law2, Law5 > > t1 = law2;
+      Table< table::Variant< Law2, Law5 > > t2 = law5;
     }
     
     GIVEN("Variants with distinct underlying data types"){

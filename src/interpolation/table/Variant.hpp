@@ -128,12 +128,6 @@ public:
   Variant( Variant&& ) = default;
   Variant( const Variant& ) = default;
   
-  template< typename Arg >
-  Variant& operator=( Arg&& arg ){ this->core = std::forward< Arg >( arg ); }
-  Variant& operator=( Variant& ) = default;
-  Variant& operator=( Variant&& ) = default;
-  Variant& operator=( const Variant& ) = default;
-  
   template< typename... Args >
   friend struct Search;
 
