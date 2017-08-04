@@ -18,9 +18,6 @@ struct ApplyUnit{
   }
 };
 
-template< typename T >
-struct echo;
-
 template< typename Unit >
 constexpr auto applyUnit = ApplyUnit<Unit>{};
 
@@ -217,4 +214,19 @@ SCENARIO("Exceptional behavior"){
 				 njoy::utility::copy(ygrid) ) );
     }
   }
+}
+
+SCENARIO("copy/move ctor regression test"){
+  std::vector<double> xgrid{ 1.0, 2.0, 3.0 };
+  std::vector<double> ygrid{ 1.0, 2.0, 3.0 };
+  
+  auto reference =
+    table::make< LinearLinear,
+                 table::search::Hashed< Binary > >( std::move(xgrid),
+                                                    std::move(ygrid) );
+  auto copy = reference;
+  REQUIRE( reference(2.5) == copy(2.5) );
+
+  auto move = std::move(copy);
+  REQUIRE( reference(2.5) == move(2.5) );
 }

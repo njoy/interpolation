@@ -35,3 +35,15 @@ Type( Xrange&& xRange, Yrange&& yRange ) :
     throw e;
   }
 }
+
+Type( const Type& other ) :
+  xRange( other.xRange ),
+  yRange( other.yRange ),
+  searchAlgorithm( this->xRange ){}
+
+Type( Type&& other ) :
+  xRange( std::move(other.xRange) ),
+  yRange( std::move(other.yRange) ),
+  searchAlgorithm( this->xRange ){}
+
+~Type() = default;
