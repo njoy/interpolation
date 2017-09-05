@@ -46,4 +46,19 @@ Type( Type&& other ) :
   yRange( std::move(other.yRange) ),
   searchAlgorithm( this->xRange ){}
 
+Type& operator=( const Type& other ){
+  this->xRange = other.xRange;
+  this->yRange = other.yRange;
+  this->searchAlgorithm = SearchAlgorithm{ this->xRange };
+  return *this;
+}
+
+Type& operator=( Type&& other ){
+  this->xRange = std::move(other.xRange);
+  this->yRange = std::move(other.yRange);
+  this->searchAlgorithm = SearchAlgorithm{ this->xRange };
+  return *this;
+}
+
+
 ~Type() = default;

@@ -21,11 +21,10 @@ public:
   Table( Table& ) = default;
   Table( Table&& ) = default;
   Table( const Table& ) = default;
-  
+
   Table& operator=( Table& ) = default;
   Table& operator=( Table&& ) = default;
   Table& operator=( const Table& ) = default;
-
   ~Table() = default;
 
   template< typename Arg, typename... CallArgs >
