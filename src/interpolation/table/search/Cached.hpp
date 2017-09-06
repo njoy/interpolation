@@ -10,10 +10,15 @@ public:
   
   template< typename Range, typename Value, typename... Args >
   decltype(auto) apply( Range&& range, Value&& value, Args&&... args ){
-    if ( (*left < value) and (value < *right) ){
+    if ( (*left < value) and (value <= *right) ){
       return this->right;
     }
-    auto iter = core.apply( std::forward<Range>(range),
+    
+    auto subrange = ( value > *right ) ?
+      ranges::make_iterator_range( right, range.end() ) :
+      ranges::make_iterator_range( range.begin(), right );
+    
+    auto iter = core.apply( subrange,
 			    std::forward<Value>(value),
 			    std::forward<Args>(args)... );
     this->right = ( iter == range.begin() ) ? ranges::next(iter) : iter;
