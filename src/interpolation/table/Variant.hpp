@@ -127,6 +127,9 @@ public:
   Variant( Variant& ) = default;
   Variant( Variant&& ) = default;
   Variant( const Variant& ) = default;
+
+  Variant& operator=( Variant&& ) = default;
+  Variant& operator=( const Variant& ) = default;
   
   template< typename... Args >
   friend struct Search;
