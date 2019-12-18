@@ -36,7 +36,7 @@ public:
   Xdata tableMin() const { return this->xRange.front(); }
   Xdata tableMax() const { return this->xRange.back(); }
   
-  static constexpr Xdata domainMin(){ return -infinity<Xdata>(); }
+  static constexpr Xdata domainMin(){ return -1*infinity<Xdata>(); }
   static constexpr Xdata domainMax(){ return infinity<Xdata>(); }
 
   #include "interpolation/table/Type/src/evaluate.hpp"
