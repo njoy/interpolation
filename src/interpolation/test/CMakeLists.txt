@@ -1,14 +1,14 @@
 
 add_executable( interpolation.test
                 demo.cpp
-                Example1.cpp
-                Example2.cpp
                 Example3.cpp
                 Example4.cpp
                 Example5.cpp
-                Example6.cpp
+                Example1.cpp
+                Example8.cpp
+                Example2.cpp
                 Example7.cpp
-                Example8.cpp )
+                Example6.cpp )
 target_compile_options( interpolation.test PRIVATE ${${PREFIX}_common_flags}
 $<$<BOOL:${strict}>:${${PREFIX}_strict_flags}>$<$<CONFIG:DEBUG>:
 ${${PREFIX}_DEBUG_flags}

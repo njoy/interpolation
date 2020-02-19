@@ -1,9 +1,9 @@
 
 add_executable( interpolation.Interpolant.LinearLogarithmic.test
-                interpolate.test.cpp
+                verifyXGridAssumptions.test.cpp
                 invert.test.cpp
                 LinearLogarithmic.test.cpp
-                verifyXGridAssumptions.test.cpp )
+                interpolate.test.cpp )
 target_compile_options( interpolation.Interpolant.LinearLogarithmic.test PRIVATE ${${PREFIX}_common_flags}
 $<$<BOOL:${strict}>:${${PREFIX}_strict_flags}>$<$<CONFIG:DEBUG>:
 ${${PREFIX}_DEBUG_flags}

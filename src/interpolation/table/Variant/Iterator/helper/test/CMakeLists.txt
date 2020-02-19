@@ -1,9 +1,9 @@
 
 add_executable( interpolation.table.Variant.Iterator.helper.test
-                comparable.test.cpp
+                helper.test.cpp
                 diffable.test.cpp
                 equitable.test.cpp
-                helper.test.cpp )
+                comparable.test.cpp )
 target_compile_options( interpolation.table.Variant.Iterator.helper.test PRIVATE ${${PREFIX}_common_flags}
 $<$<BOOL:${strict}>:${${PREFIX}_strict_flags}>$<$<CONFIG:DEBUG>:
 ${${PREFIX}_DEBUG_flags}
