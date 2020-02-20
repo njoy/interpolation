@@ -1,10 +1,10 @@
 
 add_executable( interpolation.Interpolant.LogarithmicLogarithmic.test
-                interpolate.test.cpp
+                verifyXGridAssumptions.test.cpp
                 invert.test.cpp
                 LogarithmicLogarithmic.test.cpp
-                verifyXGridAssumptions.test.cpp
-                verifyYGridAssumptions.test.cpp )
+                verifyYGridAssumptions.test.cpp
+                interpolate.test.cpp )
 target_compile_options( interpolation.Interpolant.LogarithmicLogarithmic.test PRIVATE ${${PREFIX}_common_flags}
 $<$<BOOL:${strict}>:${${PREFIX}_strict_flags}>$<$<CONFIG:DEBUG>:
 ${${PREFIX}_DEBUG_flags}
