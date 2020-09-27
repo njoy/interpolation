@@ -4,6 +4,8 @@
 #include "catch.hpp"
 #include "interpolation.hpp"
 
+#include "range/v3/view/take_exactly.hpp"
+
 using namespace njoy::interpolation;
 
 TEST_CASE("Example 8"){

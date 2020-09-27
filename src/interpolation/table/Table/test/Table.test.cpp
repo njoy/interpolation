@@ -4,6 +4,8 @@
 #include "dimwits.hpp"
 #include "interpolation.hpp"
 
+#include "range/v3/algorithm/equal.hpp"
+
 using namespace njoy::interpolation;
 using namespace dimwits;
 
@@ -38,7 +40,7 @@ SCENARIO("An interpolation table can be constructed"){
 
       Table< table::Type< LinearLinear,
 			  table::search::Binary,
-			  table::discontinuity::TakeLeft, 
+			  table::discontinuity::TakeLeft,
 			  std::vector< double >,
 			  std::vector< double > >,
 	     table::domain::min::IsCompiletimeConstant<Zero>,
@@ -79,7 +81,7 @@ SCENARIO("An interpolation table can be constructed"){
 	REQUIRE(  myTable.tableMin() ==  xGrid.front() );
 	REQUIRE(  myTable.tableMax() ==  xGrid.back() );
       }
-      
+
       THEN("the domain left limit is negative infinity"){
 	REQUIRE( myTable.domainMin() == 0.0 );
       }

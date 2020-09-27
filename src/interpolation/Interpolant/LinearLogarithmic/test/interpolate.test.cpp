@@ -3,6 +3,8 @@
 
 #include "dimwits.hpp"
 
+#include "range/v3/view/take.hpp"
+
 using namespace njoy::interpolation;
 using namespace dimwits;
 
@@ -20,7 +22,7 @@ SCENARIO("The LinearLogarithmic interpolant computes the correct value",
     auto error = std::abs( (trial - reference)
 			   / ( ( reference != 0 ) ? reference : 1.0 ) );
     return error > 1E-15; };
-  
+
   auto iterator = xValues.begin();
   auto last = std::prev( xValues.end() );
   do {
@@ -28,7 +30,7 @@ SCENARIO("The LinearLogarithmic interpolant computes the correct value",
     double y1Left = f1( xLeft ), y1Right = f1( xRight );
     double y2Left = f2( xLeft ), y2Right = f2( xRight );
     double xBar = avg( xLeft, xRight );
-    
+
     REQUIRE( not excessiveError( y1Left,
                                  LinearLogarithmic::apply
                                  ( xLeft, xLeft, xRight, y1Left, y1Right ) ) );
@@ -71,7 +73,7 @@ SCENARIO("The LinearLogarithmic interpolant computes is compatible with units",
     auto y1Left = f1( xLeft ), y1Right = f1( xRight );
     auto y2Left = f2( xLeft ), y2Right = f2( xRight );
     auto xBar = avg( xLeft, xRight );
-    
+
     REQUIRE( not excessiveError( y1Left,
                                  LinearLogarithmic::apply
                                  ( xLeft, xLeft, xRight, y1Left, y1Right ) ) );

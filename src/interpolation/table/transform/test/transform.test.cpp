@@ -3,6 +3,11 @@
 #include "catch.hpp"
 #include "interpolation.hpp"
 
+#include <numeric>
+#include "range/v3/algorithm/for_each.hpp"
+#include "range/v3/numeric/accumulate.hpp"
+#include "range/v3/view/zip.hpp"
+
 using namespace njoy::interpolation;
 
 struct Zero {
@@ -17,7 +22,7 @@ template< typename Interp, typename Xrange, typename Yrange = Xrange >
 using Base =
   table::Type< Interp,
 	       table::search::Binary,
-	       table::discontinuity::TakeLeft, 
+	       table::discontinuity::TakeLeft,
 	       Xrange, Yrange >;
 
 struct Exponential {
@@ -30,7 +35,7 @@ struct Exponential {
 
 SCENARIO("An interpolation table can be constructed with transforms"){
   GIVEN("an x- and y-grid"){
-    
+
     std::vector< double > xGrid{1.0, 2.0, 3.0};
     std::vector< double > yGrid{3.0, 5.0, 7.0};
 
@@ -54,7 +59,7 @@ SCENARIO("An interpolation table can be constructed with transforms"){
 			    table::discontinuity::TakeLeft,
 			    decltype(expX), decltype(expY) > >
 	  reference( njoy::utility::copy(expX), njoy::utility::copy(expY) );
-	
+
 	ranges::for_each( ranges::view::zip( reference.x(), trial.x() ),
 			  []( auto&& pair ){
 			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
@@ -136,7 +141,7 @@ SCENARIO("Transforms can change the input and output types"){
 			    table::discontinuity::TakeLeft,
 			    decltype(xMeters), decltype(ySeconds) > >
 	reference( njoy::utility::copy(xMeters), njoy::utility::copy(ySeconds) );
-	
+
 	ranges::for_each( ranges::view::zip( reference.x(), trial.x() ),
 			  []( auto&& pair ){
 			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
@@ -150,4 +155,3 @@ SCENARIO("Transforms can change the input and output types"){
     }
   }
 }
-

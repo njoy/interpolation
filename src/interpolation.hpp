@@ -9,7 +9,17 @@
 
 #include "Log.hpp"
 #include "boost/hana.hpp"
-#include "range/v3/all.hpp"
+//#include "range/v3/all.hpp"
+#include "range/v3/iterator_range.hpp"
+#include "range/v3/algorithm/adjacent_find.hpp"
+#include "range/v3/algorithm/find_if.hpp"
+#include "range/v3/algorithm/is_sorted.hpp"
+#include "range/v3/algorithm/lower_bound.hpp"
+#include "range/v3/utility/iterator.hpp"
+#include "range/v3/view/concat.hpp"
+#include "range/v3/view/drop_exactly.hpp"
+#include "range/v3/view/transform.hpp"
+#include "range/v3/view/join.hpp"
 #include "header-utilities.hpp"
 
 namespace njoy {

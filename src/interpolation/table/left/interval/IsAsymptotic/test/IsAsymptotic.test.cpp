@@ -3,6 +3,8 @@
 #include "catch.hpp"
 #include "interpolation.hpp"
 
+#include "range/v3/view/take_exactly.hpp"
+
 using namespace njoy::interpolation;
 
 SCENARIO("An asymptotic right interval can be applied to a table"){
@@ -13,7 +15,7 @@ SCENARIO("An asymptotic right interval can be applied to a table"){
     WHEN("constructing a Table with the search method"){
       Table< table::Type< LinearLinear,
 			  table::search::Binary,
-			  table::discontinuity::TakeLeft, 
+			  table::discontinuity::TakeLeft,
 			  std::vector< double >,
 			  std::vector< double > >,
 	     table::left::interval::IsAsymptotic >
@@ -26,11 +28,11 @@ SCENARIO("An asymptotic right interval can be applied to a table"){
     WHEN("constructing a Table without the search method"){
       const auto leftSize = 3;
       const auto rightSize = 6;
-      
+
       auto xLeft = xGrid
 	| ranges::view::drop_exactly( 0 )
 	| ranges::view::take_exactly( leftSize );
-      
+
       auto yLeft = yGrid
 	| ranges::view::drop_exactly( 0 )
 	| ranges::view::take_exactly( leftSize );
@@ -45,7 +47,7 @@ SCENARIO("An asymptotic right interval can be applied to a table"){
 
       using Component = Table< table::Type< LinearLinear,
 					    table::search::Binary,
-					    table::discontinuity::TakeLeft, 
+					    table::discontinuity::TakeLeft,
 					    decltype(xLeft), decltype(yLeft) > >;
 
       const std::vector<Component> core{ Component( njoy::utility::copy(xLeft),
