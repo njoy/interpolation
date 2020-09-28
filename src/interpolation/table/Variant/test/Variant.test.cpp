@@ -5,6 +5,8 @@
 
 #include "range/v3/algorithm/equal.hpp"
 
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 
 SCENARIO("An variant interpolation table can be constructed"){

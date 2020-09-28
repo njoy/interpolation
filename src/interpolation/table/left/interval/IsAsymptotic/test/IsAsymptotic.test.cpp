@@ -5,6 +5,8 @@
 
 #include "range/v3/view/take_exactly.hpp"
 
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 
 SCENARIO("An asymptotic right interval can be applied to a table"){

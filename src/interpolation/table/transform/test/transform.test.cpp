@@ -8,6 +8,8 @@
 #include "range/v3/numeric/accumulate.hpp"
 #include "range/v3/view/zip.hpp"
 
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 
 struct Zero {

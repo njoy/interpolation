@@ -6,6 +6,8 @@
 #include "range/v3/algorithm/equal.hpp"
 #include "range/v3/view/take_exactly.hpp"
 
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 
 SCENARIO("An variant interpolation table can be constructed"){

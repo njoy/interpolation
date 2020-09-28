@@ -12,6 +12,8 @@
 #include "range/v3/view/take_exactly.hpp"
 #include "range/v3/view/zip.hpp"
 
+#include "header-utilities/copy.hpp"
+
 template< typename T >
 struct echo;
 

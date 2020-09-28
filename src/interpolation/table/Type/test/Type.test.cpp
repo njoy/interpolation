@@ -6,6 +6,8 @@
 
 #include "range/v3/algorithm/equal.hpp"
 
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 using namespace dimwits;
 
