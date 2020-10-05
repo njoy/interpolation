@@ -3,6 +3,8 @@
 
 #include "dimwits.hpp"
 
+#include "range/v3/view/take_exactly.hpp"
+
 using namespace njoy::interpolation;
 using namespace dimwits;
 
@@ -18,7 +20,7 @@ SCENARIO("The LinearLogarithmic interpolant computes the correct inversion",
     auto error = std::abs( (trial - reference)
 			   / ( ( reference != 0 ) ? reference : 1.0 ) );
     return error > 5E-14; };
-  
+
   auto iterator = xValues.begin();
   auto last = std::prev( xValues.end() );
   do {
@@ -64,7 +66,7 @@ SCENARIO("LogarithmicLinear computes the correct inversion with units",
   auto units = xValues |
     ranges::view::take_exactly( xValues.size() - 1 ) |
     ranges::view::transform( []( auto arg ){ return arg * electronVolts; } );
-  
+
   auto iterator = units.begin();
   auto last = units.end();
   do {

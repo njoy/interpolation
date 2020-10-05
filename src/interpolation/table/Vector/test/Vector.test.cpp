@@ -3,6 +3,11 @@
 #include "catch.hpp"
 #include "interpolation.hpp"
 
+#include "range/v3/algorithm/equal.hpp"
+#include "range/v3/view/take_exactly.hpp"
+
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 
 SCENARIO("An variant interpolation table can be constructed"){
@@ -13,11 +18,11 @@ SCENARIO("An variant interpolation table can be constructed"){
     GIVEN("a Vector can be constructed"){
       const auto leftSize = 3;
       const auto rightSize = 6;
-      
+
       auto xLeft = xGrid
 	| ranges::view::drop_exactly( 0 )
 	| ranges::view::take_exactly( leftSize );
-      
+
       auto yLeft = yGrid
 	| ranges::view::drop_exactly( 0 )
 	| ranges::view::take_exactly( leftSize );
@@ -32,7 +37,7 @@ SCENARIO("An variant interpolation table can be constructed"){
 
       using Component = Table< table::Type< LinearLinear,
 					    table::search::Binary,
-					    table::discontinuity::TakeLeft, 
+					    table::discontinuity::TakeLeft,
 					    decltype(xLeft), decltype(yLeft) > >;
 
       const std::vector<Component> core{ Component( njoy::utility::copy(xLeft),
@@ -48,7 +53,7 @@ SCENARIO("An variant interpolation table can be constructed"){
       REQUIRE( vc.domainMax() == infinity<double>() );
       REQUIRE( not vc.specifiesLeftInterval() );
       REQUIRE( not vc.specifiesRightInterval() );
-      REQUIRE( not vc.specifiesDomainMin() ); 
+      REQUIRE( not vc.specifiesDomainMin() );
       REQUIRE( not vc.specifiesDomainMax() );
 
       bool correct;
@@ -56,7 +61,7 @@ SCENARIO("An variant interpolation table can be constructed"){
       REQUIRE(correct);
       correct = ranges::equal( vc.y(), yGrid );
       REQUIRE(correct);
-      
+
       REQUIRE( core[0](2.5) == vc(2.5) );
       REQUIRE( core[1](6.5) == vc(6.5) );
     }
@@ -69,7 +74,7 @@ SCENARIO("An variant interpolation table can be constructed"){
         auto xLeft = xGrid
 	  | ranges::view::drop_exactly( 0 )
 	  | ranges::view::take_exactly( leftSize );
-	
+
 	auto yLeft = yGrid
 	  | ranges::view::drop_exactly( 0 )
 	  | ranges::view::take_exactly( leftSize );
@@ -84,7 +89,7 @@ SCENARIO("An variant interpolation table can be constructed"){
 
 	using Component = Table< table::Type< LinearLinear,
 					      table::search::Binary,
-					      table::discontinuity::TakeLeft, 
+					      table::discontinuity::TakeLeft,
 					      decltype(xLeft), decltype(yLeft) > >;
 
 	const std::vector<Component> core{ Component( njoy::utility::copy(xLeft),
@@ -100,7 +105,7 @@ SCENARIO("An variant interpolation table can be constructed"){
 	auto xLeft = xGrid
 	  | ranges::view::drop_exactly( 0 )
 	  | ranges::view::take_exactly( leftSize + 1);
-	
+
 	auto yLeft = yGrid
 	  | ranges::view::drop_exactly( 0 )
 	  | ranges::view::take_exactly( leftSize + 1 );
@@ -115,7 +120,7 @@ SCENARIO("An variant interpolation table can be constructed"){
 
 	using Component = Table< table::Type< LinearLinear,
 					      table::search::Binary,
-					      table::discontinuity::TakeLeft, 
+					      table::discontinuity::TakeLeft,
 					      decltype(xLeft), decltype(yLeft) > >;
 
 	const std::vector<Component> core{ Component( njoy::utility::copy(xLeft),

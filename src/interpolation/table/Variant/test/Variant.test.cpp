@@ -3,6 +3,10 @@
 #include "catch.hpp"
 #include "interpolation.hpp"
 
+#include "range/v3/algorithm/equal.hpp"
+
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 
 SCENARIO("An variant interpolation table can be constructed"){
@@ -14,20 +18,20 @@ SCENARIO("An variant interpolation table can be constructed"){
       using Law2 =
 	Table< table::Type< LinearLinear,
 			    table::search::Binary,
-			    table::discontinuity::TakeLeft, 
+			    table::discontinuity::TakeLeft,
 			    std::vector< double >, std::vector< double > > >;
-      
+
       using Law5 =
 	Table< table::Type< LogarithmicLogarithmic,
 			    table::search::Binary,
-			    table::discontinuity::TakeLeft, 
+			    table::discontinuity::TakeLeft,
 			    std::vector< double >, std::vector< double > > >;
 
       Table< table::Variant< Law2, Law5 > >
 	myTable( Law2( njoy::utility::copy(xGrid), njoy::utility::copy(yGrid) ) );
 
       bool correct;
-      
+
       correct = ranges::equal( myTable.x(), xGrid );
       REQUIRE( correct );
 
@@ -50,17 +54,17 @@ SCENARIO("An variant interpolation table can be constructed"){
       Table< table::Variant< Law2, Law5 > > t1 = law2;
       Table< table::Variant< Law2, Law5 > > t2 = law5;
     }
-    
+
     GIVEN("Variants with distinct underlying data types"){
       using Law2 = Table< table::Type< LinearLinear,
     				       table::search::Binary,
-    				       table::discontinuity::TakeLeft, 
+    				       table::discontinuity::TakeLeft,
     				       std::vector< double >,
     				       std::vector< double > > >;
-      
+
       using Law5 = Table< table::Type< LogarithmicLogarithmic,
     				       table::search::Binary,
-    				       table::discontinuity::TakeLeft, 
+    				       table::discontinuity::TakeLeft,
     				       std::array< double, 3 >,
     				       std::array< double, 3 > > >;
 
@@ -69,7 +73,7 @@ SCENARIO("An variant interpolation table can be constructed"){
     		       njoy::utility::copy(yGrid) ) );
 
       bool correct;
-      
+
       correct = ranges::equal( myTable.x(), xGrid );
       REQUIRE( correct );
 
@@ -78,7 +82,7 @@ SCENARIO("An variant interpolation table can be constructed"){
 
       REQUIRE( 6.0 == myTable( 2.5 ) );
       REQUIRE( 6.0 == myTable( 2.5, myTable.search() ) );
-      
+
       REQUIRE( -infinity<double>() == myTable.domainMin() );
       REQUIRE( infinity<double>() == myTable.domainMax() );
 

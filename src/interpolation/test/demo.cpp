@@ -9,6 +9,11 @@
 #include "boost/hana/ext/std/tuple.hpp"
 #include "boost/hana/ext/std/pair.hpp"
 
+#include "range/v3/view/take_exactly.hpp"
+#include "range/v3/view/zip.hpp"
+
+#include "header-utilities/copy.hpp"
+
 template< typename T >
 struct echo;
 
@@ -50,12 +55,12 @@ SCENARIO("Lets zip some vectors"){
     1.,  3.,  5.,  7.,  9., 11., 13., 15. };
 
   const int size = 8;
-  
+
   auto energyView = XSS
     | ranges::view::take_exactly( size );
 
   std::cout << energyView << std::endl;
-  
+
   auto totalView = XSS
     | ranges::view::drop_exactly( size )
     | ranges::view::take_exactly( size );
@@ -67,7 +72,7 @@ SCENARIO("Lets zip some vectors"){
     | ranges::view::take_exactly( size );
 
   std::cout << absorptionView << std::endl;
-  
+
   auto scatterView = XSS
     | ranges::view::drop_exactly( size * 3 )
     | ranges::view::take_exactly( size );
@@ -77,15 +82,15 @@ SCENARIO("Lets zip some vectors"){
   auto zippedVector =
     ranges::view::zip( energyView, scatterView, absorptionView, totalView )
     | ranges::to_vector;
-  
+
   std::cout << zippedVector << std::endl;
 
   auto energy = zippedVector
     | ranges::view::transform( []( const auto& arg ){
 	return std::get<0>(arg) * mega(electronVolts); } );
-  
+
   std::cout << energy << std::endl;
-  
+
   auto scattering = zippedVector
     | ranges::view::transform( []( const auto& arg ){
 	return std::get<1>(arg) * barn; } );
@@ -97,7 +102,7 @@ SCENARIO("Lets zip some vectors"){
 	return std::get<2>(arg) * barn; } );
 
   std::cout << absorption << std::endl;
-  
+
   auto total = zippedVector
     | ranges::view::transform( []( const auto& arg ){
 	return std::get<3>(arg) * barn; } );
@@ -117,7 +122,7 @@ SCENARIO("Lets zip some vectors"){
 				     utility::copy(scattering) );
 
   REQUIRE( 6.0 * barn == scatteringXS( 3.5 * mega(electronVolts) ) );
-  
+
   auto absorptionXS =
     interpolation::table::make
     < interpolation::LinearLinear >( utility::copy(energy),

@@ -4,6 +4,8 @@
 #include "dimwits.hpp"
 #include "interpolation.hpp"
 
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 using namespace dimwits;
 
@@ -15,15 +17,15 @@ SCENARIO("An interpolation table can be constructed with a domain maximum"){
 
     Table< table::Type< LinearLinear,
 			table::search::Binary,
-			table::discontinuity::TakeLeft, 
+			table::discontinuity::TakeLeft,
 			std::vector< double >, std::vector< double > >,
 	   table::domain::max::IsRuntimeConstant >
       myTable( 4.0, njoy::utility::copy(xGrid), njoy::utility::copy(yGrid) );
 
     THEN("the table can be evaluated in the center interval"){
       REQUIRE( 4.0 == myTable.domainMax() );
-    }    
-    
+    }
+
     THEN("the table can be evaluated in the center interval"){
       REQUIRE( 6.0 == myTable( 2.5 ) );
     }

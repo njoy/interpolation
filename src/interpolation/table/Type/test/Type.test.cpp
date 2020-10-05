@@ -4,6 +4,10 @@
 #include "dimwits.hpp"
 #include "interpolation.hpp"
 
+#include "range/v3/algorithm/equal.hpp"
+
+#include "header-utilities/copy.hpp"
+
 using namespace njoy::interpolation;
 using namespace dimwits;
 
@@ -37,7 +41,7 @@ SCENARIO("An interpolation table can be constructed"){
       THEN("the table can be evaluated"){
 	REQUIRE( 3.0 == myTable( 1.0 ) );
 	REQUIRE( 7.0 == myTable( 3.0 ) );
-	
+
 	REQUIRE( 6.5 == myTable( 2.5 ) );
 	REQUIRE( 6.5 == myTable( 2.5, myTable.search() ) );
       }
@@ -58,7 +62,7 @@ SCENARIO("An interpolation table can be constructed"){
 	REQUIRE(  myTable.tableMin() ==  xGrid.front() );
 	REQUIRE(  myTable.tableMax() ==  xGrid.back() );
       }
-      
+
       THEN("the domain left limit is negative infinity"){
 	REQUIRE( myTable.domainMin() == -infinity<double>() );
       }
@@ -71,7 +75,7 @@ SCENARIO("An interpolation table can be constructed"){
     THEN("interpolation tables can be constructed which refs each component"){
       auto x = xGrid | ranges::view::all;
       auto y = yGrid | ranges::view::all;
-      
+
       Table< table::Type< LinearLinear,
 			  table::search::Binary,
 			  table::discontinuity::TakeLeft,
@@ -89,7 +93,7 @@ SCENARIO("An interpolation table can be constructed"){
 
       THEN("the table can provide y-values"){
 	REQUIRE( ranges::equal( myTable.y(), yGrid ) );
-      }      
+      }
     }
 
     THEN("interpolation tables can hash query values"){
@@ -102,7 +106,7 @@ SCENARIO("An interpolation table can be constructed"){
       THEN("the table can be evaluated"){
 	REQUIRE( 3.0 == myTable( 1.0 ) );
 	REQUIRE( 7.0 == myTable( 3.0 ) );
-	
+
 	REQUIRE( 6.5 == myTable( 2.5 ) );
 	REQUIRE( 6.5 == myTable( 2.5, myTable.search() ) );
       }
@@ -120,13 +124,13 @@ SCENARIO("An interpolation table can be constructed"){
 	myTable( njoy::utility::copy(xGrid), njoy::utility::copy(yGrid) );
 
       auto search = myTable.cachedSearch();
-      
+
       THEN("the table can be evaluated"){
 	REQUIRE( 3.0 == myTable( 1.0, search ) );
 	REQUIRE( 3.0 == myTable( 1.0, search ) );
 	REQUIRE( 7.0 == myTable( 3.0, search ) );
 	REQUIRE( 7.0 == myTable( 3.0, search ) );
-	
+
 	REQUIRE( 6.5 == myTable( 2.5, search ) );
 	REQUIRE( 6.5 == myTable( 2.5, search ) );
       }
@@ -143,7 +147,7 @@ SCENARIO("An interpolation table can be constructed"){
 
       Table< table::Type< LinearLinear,
 			  table::search::Binary,
-			  table::discontinuity::TakeLeft, 
+			  table::discontinuity::TakeLeft,
 			  decltype(x), decltype(y) > >
       	myTable( njoy::utility::copy(x), njoy::utility::copy(y) );
 
@@ -164,7 +168,7 @@ SCENARIO("An interpolation table can be constructed"){
 	REQUIRE( myTable.tableMin() == x.front() );
 	REQUIRE( myTable.tableMax() == x.back() );
       }
-      
+
       THEN("the domain left limit is negative infinity"){
 	REQUIRE( myTable.domainMin() == -infinity< Quantity<Meter> >() );
       }
@@ -188,7 +192,7 @@ SCENARIO("Exceptional behavior"){
   GIVEN("zero length x-grid"){
     std::vector<double> xgrid{};
     std::vector<double> ygrid{};
-    
+
     THEN("construction will throw"){
       REQUIRE_THROWS( construct( njoy::utility::copy(xgrid),
 				 njoy::utility::copy(ygrid) ) );
@@ -198,7 +202,7 @@ SCENARIO("Exceptional behavior"){
   GIVEN("mismatched grid lengths"){
     std::vector<double> xgrid{ 1.0, 2.0, 3.0 };
     std::vector<double> ygrid{ 1.0, 2.0, 3.0, 4.0 };
-    
+
     THEN("construction will throw"){
       REQUIRE_THROWS( construct( njoy::utility::copy(xgrid),
 				 njoy::utility::copy(ygrid) ) );
@@ -208,7 +212,7 @@ SCENARIO("Exceptional behavior"){
   GIVEN("unsorted x-grid"){
     std::vector<double> xgrid{ 1.0, 3.0, 2.0 };
     std::vector<double> ygrid{ 1.0, 2.0, 3.0 };
-    
+
     THEN("construction will throw"){
       REQUIRE_THROWS( construct( njoy::utility::copy(xgrid),
 				 njoy::utility::copy(ygrid) ) );
@@ -219,7 +223,7 @@ SCENARIO("Exceptional behavior"){
 SCENARIO("copy/move ctor regression test"){
   std::vector<double> xgrid{ 1.0, 2.0, 3.0 };
   std::vector<double> ygrid{ 1.0, 2.0, 3.0 };
-  
+
   auto reference =
     table::make< LinearLinear,
                  table::search::Hashed< Binary > >( std::move(xgrid),
