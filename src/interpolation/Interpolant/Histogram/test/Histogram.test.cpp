@@ -22,6 +22,16 @@ SCENARIO("The Histogram interpolant computes the correct inversion",
   REQUIRE( xLeft == Histogram::invert( 15.0, xLeft, xRight, yLeft, yRight ) );
 }
 
+SCENARIO("The Histogram interpolant computes the correct integral",
+         "[interpolant], [Histogram]"){
+  double xLeft = 0.0, xRight = 1.0, yLeft = 10.0, yRight = 20.0;
+  double xLow = 0., xHi = 0.5;
+  REQUIRE( 0.5*yLeft == Histogram::integrate( xLow, xHi, xLeft, xRight, yLeft, yRight ) );
+  xLow = 0.25;
+  xHi = xRight;
+  REQUIRE( 0.75*yLeft == Histogram::integrate( xLow, xHi, xLeft, xRight, yLeft, yRight ) );
+}
+
 SCENARIO("The Histogram interpolant is compatible with units",
          "[interpolant], [Histogram]"){
   auto xLeft = 0.0 * electronVolts;
@@ -32,6 +42,10 @@ SCENARIO("The Histogram interpolant is compatible with units",
 	   Histogram::apply( 0.5 * electronVolts, xLeft, xRight, yLeft, yRight ) );
   REQUIRE( xLeft ==
 	   Histogram::invert( 15.0 * barns, xLeft, xRight, yLeft, yRight ) );  
+  auto xLow = 0. * electronVolts;
+  auto xHi = 0.5 * electronVolts;
+  REQUIRE( 5. * electronVolts * barn ==
+           Histogram::integrate(xLow, xHi, xLeft, xRight, yLeft, yRight));
 }
 
 SCENARIO("The Histogram rejects grids with redundant x-values",
