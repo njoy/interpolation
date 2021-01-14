@@ -16,6 +16,17 @@ struct LinearLogarithmic : public Interpolant {
                         ( ( safe(y) - yLeft ) / ( yRight - yLeft ) ) ) : xLeft;
   }
 
+  template< typename Xarg, typename X, typename Y >
+  static auto integrate( Xarg&& xLow, Xarg&& xHi, X&& xLeft, X&& xRight, Y&& yLeft, Y&& yRight ){
+    using safe = std::decay_t<X>;
+    const auto numerator_hi = xHi * ((yRight - yLeft) * std::log(safe(xHi) / xLeft) +
+                              yLeft * std::log(xRight / xLeft) + yLeft - yRight);
+    const auto numerator_low = xLow * ((yRight - yLeft) * std::log(safe(xLow) / xLeft) +
+                               yLeft * std::log(xRight / xLeft) + yLeft - yRight);
+    const auto denominator = std::log(xRight / xLeft);
+    return (numerator_hi / denominator) - (numerator_low / denominator);
+  }
+
   template< typename Range >
   static void verifyXGridAssumptions( Range&& range ){
     const auto zero = 0 * range.front();
