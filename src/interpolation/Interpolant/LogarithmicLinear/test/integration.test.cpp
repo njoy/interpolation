@@ -1,6 +1,5 @@
 #include "catch.hpp"
 #include "interpolation.hpp"
-#include <iostream>
 
 #include "dimwits.hpp"
 
