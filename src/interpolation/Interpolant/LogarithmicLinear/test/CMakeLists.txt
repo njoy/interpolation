@@ -2,6 +2,7 @@
 add_executable( interpolation.Interpolant.LogarithmicLinear.test
                 apply.test.cpp
                 LogarithmicLinear.test.cpp
+                integration.test.cpp
                 invert.test.cpp )
 target_compile_options( interpolation.Interpolant.LogarithmicLinear.test PRIVATE ${${PREFIX}_common_flags}
 $<$<BOOL:${strict}>:${${PREFIX}_strict_flags}>$<$<CONFIG:DEBUG>:

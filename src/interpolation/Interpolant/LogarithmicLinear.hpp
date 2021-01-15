@@ -17,6 +17,18 @@ struct LogarithmicLinear : public Interpolant {
       xLeft;
   }
 
+  template< typename Xarg, typename X, typename Y >
+  static auto integrate( Xarg&& xLow, Xarg&& xHi, X&& xLeft, X&& xRight, Y&& yLeft, Y&& yRight ){
+    using safe = std::decay_t<X>;
+    const auto base = yRight / yLeft;
+    const auto denominator = std::log(base);
+    const auto coefficient = yLeft * (xRight - xLeft);
+    const auto exponent_hi = (xLeft - safe(xHi)) / (xLeft - xRight);
+    const auto exponent_low = (xLeft - safe(xLow)) / (xLeft - xRight);
+    return (coefficient / denominator) * 
+           (std::pow(base, exponent_hi) - std::pow(base, exponent_low));
+  }
+
   template< typename Range >
   static void verifyYGridAssumptions( Range&& range ){
     auto it = Interpolant::findChangeOfSign( range );
