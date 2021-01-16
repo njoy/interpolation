@@ -17,6 +17,20 @@ struct LogarithmicLogarithmic : public Interpolant {
                           / std::log( yRight * inverseYLeft );
     return xLeft * std::pow(xRight / xLeft, logRatio);
   }
+  
+  template< typename Xarg, typename X, typename Y >
+  static auto integrate( Xarg&& xLow, Xarg&& xHi, X&& xLeft, X&& xRight, Y&& yLeft, Y&& yRight ){
+    using safe = std::decay_t<X>;
+    const auto yRatio = yRight / yLeft;
+    const auto xRatio = xRight / xLeft;
+    const auto log_yRatio = std::log(yRatio);
+    const auto log_xRatio = std::log(xRatio);
+    const auto exponent = log_yRatio / log_xRatio;
+    const auto denominator = exponent + 1.0;
+    if(std::abs(denominator) <= 1.E-12) {return (yLeft*xLeft) * std::log(safe(xHi)/safe(xLow));}
+    return (yLeft / denominator) * (safe(xHi) * std::pow(safe(xHi) / xLeft, exponent) -
+                                safe(xLow) * std::pow(safe(xLow) / xLeft, exponent));
+  }
 
   template< typename Range >
   static void verifyXGridAssumptions( Range&& range ){
