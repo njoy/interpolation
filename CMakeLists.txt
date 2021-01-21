@@ -62,6 +62,11 @@ target_link_libraries( interpolation
     INTERFACE dimwits
     )
 
+######
+# TEMPORARY TEST EXECUTABLE
+add_executable(htest htest/main.cpp)
+target_link_libraries(htest PRIVATE interpolation range-v3-adapter Log header-utilities dimwits)
+
 
 #######################################################################
 # Top-level Only

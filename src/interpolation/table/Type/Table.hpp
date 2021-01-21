@@ -41,6 +41,11 @@ public:
     return Parent:: template evaluate<Parent>( x,
 					       std::forward<CallArgs>(args)... );
   }
+
+  template< typename Xdata >
+  auto integrate(const Xdata& xLow, const Xdata& xHi) const {
+    return Parent:: template do_integrate<Parent>( xLow, xHi, Parent::search() );
+  }
   
 };
 
