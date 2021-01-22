@@ -16,15 +16,11 @@ auto do_integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgori
                                         this->y().front(), this->y().back());
 
   // Integration may only be carried out over the function's valid domain
-  if (x_low <= this->tableMin())
+  if (x_low < this->tableMin())
     x_low = this->tableMin();
-  else if (x_low >= this->tableMin())
-    x_low = this->tableMax();
 
-  if (x_hi >= this->tableMax())
+  if (x_hi > this->tableMax())
     x_hi = this->tableMax();
-  else if (x_hi <= this->tableMin())
-    x_hi = this->tableMin();
 
   // Get iterator for lower bound of first interval
   auto low_it = searchAlgorithm.apply(this->x(), x_low);
@@ -55,7 +51,7 @@ auto do_integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgori
     else {
       x_low_lim = x_upp_lim;
       x_upp_lim = x_hi;
-      ranges::next(low_it);
+      low_it = ranges::next(low_it);
     }
   }
 
