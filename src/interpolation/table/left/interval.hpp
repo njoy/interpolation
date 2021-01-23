@@ -14,6 +14,35 @@ protected:
       Parent::template evaluate<Parent>( std::forward<Arg>(x),
 					 std::forward<Args>(args)... );
   }
+
+  template< typename Table, typename Arg, typename... Args >
+  auto integrate( Arg&& xLow, Arg&& xHi, Args&&... args ) const {
+    // Captures child leftLimit method
+    const auto& table = static_cast< const Table& >( *this );
+
+    const auto x_low = xLow;
+    const auto x_hi = xHi;
+
+    // Integral automatically cuts off to range to table
+    auto integral = Parent:: template integrate<Parent>( std::forward<Arg>(xLow),
+                                        std::forward<Arg>(xHi),
+					                              std::forward<Args>(args)... );
+
+    // Must how add portions which occur outside of table
+    const bool reversed = x_low > x_hi;
+    if(x_low < table.tableMin() && x_hi < table.tableMin()) {
+      integral += (x_hi - x_low) * table.leftIntervalValue();
+    } else if(reversed) {
+      // If didn't select first case, and we are reversed, it must be that xLow is
+      // within the interval, but xHi isn't, so we only need to count tableMin
+      // to xHi, in negative sense.
+      integral += (x_hi - table.tableMin()) * table.leftIntervalValue();
+    } else if(x_low < table.tableMin()){
+      integral += (table.tableMin() - x_low) * table.leftIntervalValue();
+    }
+
+    return integral;
+  }
   
 public:
   static constexpr auto specifiesLeftInterval(){ return true; }

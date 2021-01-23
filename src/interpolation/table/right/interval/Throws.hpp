@@ -16,6 +16,29 @@ struct Throws {
 						std::forward<Args>(args)... );
     }
 
+    template< typename Table, typename Arg, typename... Args >
+    auto integrate( Arg&& xLow, Arg&& xHi, Args&&... args ) const {
+      // Captures child leftLimit method
+      const auto& table = static_cast< const Table& >( *this );
+      if ( xLow > table.tableMax() ){
+        Log::error( "Lower integration limit in interval with undefined behavior." );
+        Log::info( "Lower integration limit: {}", xLow );
+        Log::info( "The function is undefined for values greater than: {}", table.tableMax() );
+        throw std::out_of_range( "Lower integration limit in interval with undefined behavior." );
+      }
+
+      if ( xHi > table.tableMax() ){
+        Log::error( "Upper integration limit in interval with undefined behavior." );
+        Log::info( "Upper integration limit: {}", xHi );
+        Log::info( "The function is undefined for values greater than: {}", table.tableMax() );
+        throw std::out_of_range( "Upper integration limit in interval with undefined behavior." );
+      }
+
+      return Parent:: template integrate<Parent>( std::forward<Arg>(xLow),
+                  std::forward<Arg>(xHi),
+                  std::forward<Args>(args)... );
+    }
+
   public:
     template< typename... Args >
     Type( Args&&... args ) : Interval<Parent>( std::forward< Args >( args )... ){}

@@ -3,17 +3,14 @@ auto integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgorithm
   auto x_low = xLow;
   auto x_hi = xHi;
 
-  bool inverted = x_low > x_hi;
+  const bool inverted = x_low > x_hi;
   if(inverted) {
     const auto x_low_tmp = x_low;
     x_low = x_hi;
     x_hi = x_low_tmp;
   }
 
-  // Initialize to zero by doing integral over range of 0 width
-  auto integral = this->interpolant().integrate(x_low, x_low,
-                                        this->x().front(), this->x().back(),
-                                        this->y().front(), this->y().back());
+  
 
   // Integration may only be carried out over the function's valid domain
   if (x_low < this->tableMin())
@@ -25,6 +22,10 @@ auto integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgorithm
     x_hi = this->tableMax();
   else if (x_hi < this->tableMin())
     x_hi = this->tableMin();
+
+  // Initialize to zero by doing integral over range of 0 width
+  auto integral = (x_low - x_low) * this->y().front();
+  if(x_low == x_hi) return integral;
 
   // Get iterator for lower bound of first interval
   auto low_it = searchAlgorithm.apply(this->x(), x_low);
