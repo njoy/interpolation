@@ -1,67 +1,76 @@
 template< typename Table, typename Algorithm >
-auto integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgorithm ) const {
-  auto x_low = xLow;
-  auto x_hi = xHi;
+auto integrate( const Xdata& xL, const Xdata& xH,
+                Algorithm&& searchAlgorithm ) const {
+  auto xLow = xL;
+  auto xHi = xH;
 
-  const bool inverted = x_low > x_hi;
+  const bool inverted = xLow > xHi;
   if(inverted) {
-    const auto x_low_tmp = x_low;
-    x_low = x_hi;
-    x_hi = x_low_tmp;
+    const auto xLowTmp = xLow;
+    xLow = xHi;
+    xHi = xLowTmp;
   }
 
-  
-
   // Integration may only be carried out over the function's valid domain
-  if (x_low < this->tableMin())
-    x_low = this->tableMin();
-  else if (x_low > this->tableMax())
-    x_low = this->tableMax();
+  if (xLow < this->tableMin()) {
+    xLow = this->tableMin();
+  } else if (xLow > this->tableMax()) {
+    xLow = this->tableMax();
+  }
 
-  if (x_hi > this->tableMax())
-    x_hi = this->tableMax();
-  else if (x_hi < this->tableMin())
-    x_hi = this->tableMin();
+  if (xHi > this->tableMax()) {
+    xHi = this->tableMax();
+  } else if (xHi < this->tableMin()) {
+    xHi = this->tableMin(); 
+  }
 
   // Initialize to zero by doing integral over range of 0 width
-  auto integral = (x_low - x_low) * this->y().front();
-  if(x_low == x_hi) return integral;
+  auto integral = (xLow - xLow) * this->y().front();
+  if (xLow == xHi) {
+    return integral;
+  }
 
   // Get iterator for lower bound of first interval
-  auto low_it = searchAlgorithm.apply(this->x(), x_low);
-  if (*low_it > x_low) low_it = ranges::prev(low_it);
+  auto lowIt = searchAlgorithm.apply(this->x(), xLow);
+  if (*lowIt > xLow) {
+    lowIt = ranges::prev(lowIt);
+  }
 
-  
-  auto x_low_lim = x_low;
-  auto x_upp_lim = x_hi;
+  auto xLowLim = xLow;
+  auto xUppLim = xHi;
   bool integrating = true;
   while (integrating) {
-    auto hi_it = low_it;
-    hi_it = ranges::next(hi_it);
+    auto hiIt = lowIt;
+    hiIt = ranges::next(hiIt);
 
     auto i = ranges::distance(this->x().begin(), low_it);
 
-    auto x1 = *low_it;
-    auto x2 = *hi_it;
+    auto x1 = *lowIt;
+    auto x2 = *hiIt;
     auto y1 = *ranges::next(this->y().begin(), i);
     auto y2 = *ranges::next(this->y().begin(), i+1);
 
-    if (x_low_lim < x1) x_low_lim = x1;
-    if (x_upp_lim > x2) x_upp_lim = x2;
+    if (xLowLim < x1) {
+      xLowLim = x1;
+    }
+    if (xUppLim > x2) {
+      xUppLim = x2;
+    }
 
-    integral += this->interpolant().integrate(x_low_lim, x_upp_lim, x1, x2, y1, y2);
+    integral += this->interpolant().integrate(xLowLim, xUppLim, x1, x2, y1, y2);
 
-    if (x_upp_lim == x_hi)
+    if (xUppLim == xHi) {
       integrating = false;
-    else {
-      x_low_lim = x_upp_lim;
-      x_upp_lim = x_hi;
-      low_it = ranges::next(low_it);
+    } else {
+      xLowLim = xUppLim;
+      xUppLim = xHi;
+      lowIt = ranges::next(lowIt);
     }
   }
 
-  if(inverted) integral *= -1.;
+  if(inverted) {
+    integral *= -1.;
+  }
 
   return integral;
-
 }

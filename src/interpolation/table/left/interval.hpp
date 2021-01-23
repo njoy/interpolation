@@ -16,29 +16,29 @@ protected:
   }
 
   template< typename Table, typename Arg, typename... Args >
-  auto integrate( Arg&& xLow, Arg&& xHi, Args&&... args ) const {
+  auto integrate( Arg&& xL, Arg&& xH, Args&&... args ) const {
     // Captures child leftLimit method
     const auto& table = static_cast< const Table& >( *this );
 
-    const auto x_low = xLow;
-    const auto x_hi = xHi;
+    const auto xLow = xL;
+    const auto xHi = xH;
 
     // Integral automatically cuts off to range to table
-    auto integral = Parent:: template integrate<Parent>( std::forward<Arg>(xLow),
-                                        std::forward<Arg>(xHi),
+    auto integral = Parent:: template integrate<Parent>( std::forward<Arg>(xL),
+                                        std::forward<Arg>(xH),
 					                              std::forward<Args>(args)... );
 
     // Must how add portions which occur outside of table
-    const bool reversed = x_low > x_hi;
-    if(x_low < table.tableMin() && x_hi < table.tableMin()) {
-      integral += (x_hi - x_low) * table.leftIntervalValue();
+    const bool reversed = xLow > xHi;
+    if(xLow < table.tableMin() && xHi < table.tableMin()) {
+      integral += (xHi - xLow) * table.leftIntervalValue();
     } else if(reversed) {
       // If didn't select first case, and we are reversed, it must be that xLow is
       // within the interval, but xHi isn't, so we only need to count tableMin
       // to xHi, in negative sense.
-      integral += (x_hi - table.tableMin()) * table.leftIntervalValue();
-    } else if(x_low < table.tableMin()){
-      integral += (table.tableMin() - x_low) * table.leftIntervalValue();
+      integral += (xHi - table.tableMin()) * table.leftIntervalValue();
+    } else if(xLow < table.tableMin()){
+      integral += (table.tableMin() - xLow) * table.leftIntervalValue();
     }
 
     return integral;
