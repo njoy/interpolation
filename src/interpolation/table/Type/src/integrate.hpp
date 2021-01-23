@@ -1,5 +1,5 @@
 template< typename Table, typename Algorithm >
-auto do_integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgorithm ) const {
+auto integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgorithm ) const {
   auto x_low = xLow;
   auto x_hi = xHi;
 
@@ -18,9 +18,13 @@ auto do_integrate( const Xdata& xLow, const Xdata& xHi, Algorithm&& searchAlgori
   // Integration may only be carried out over the function's valid domain
   if (x_low < this->tableMin())
     x_low = this->tableMin();
+  else if (x_low > this->tableMax())
+    x_low = this->tableMax();
 
   if (x_hi > this->tableMax())
     x_hi = this->tableMax();
+  else if (x_hi < this->tableMin())
+    x_hi = this->tableMin();
 
   // Get iterator for lower bound of first interval
   auto low_it = searchAlgorithm.apply(this->x(), x_low);
