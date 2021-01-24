@@ -12,6 +12,17 @@ struct X {
 	( Transform::invert( std::forward<Arg>(x) ),
 	  std::forward<Args>(args)... );
     }
+
+    template< typename Table, typename Arg, typename... Args >
+    auto integrate( Arg&& xLow, Arg&& xHi, Args&&... args ) const {
+      Log::error("Integration of a table with X Transform is undefined.");
+      throw std::logic_error(
+              "Integration of a table with X Transform is undefined." );
+
+      return Parent:: template integrate<Parent>( std::forward<Arg>(xLow),
+                                                  std::forward<Arg>(xHi),
+                                                  std::forward<Args>(args)... );
+    }
     
   public:
     using Xdata =
@@ -45,6 +56,17 @@ struct Y {
       return Transform::apply
 	( Parent::template evaluate<Parent>( std::forward<Arg>(x),
 					     std::forward<Args>(args)... ) );
+    }
+
+    template< typename Table, typename Arg, typename... Args >
+    auto integrate( Arg&& xLow, Arg&& xHi, Args&&... args ) const {
+      Log::error("Integration of a table with Y Transform is undefined.");
+      throw std::logic_error(
+              "Integration of a table with Y Transform is undefined." );
+
+      return Parent:: template integrate<Parent>( std::forward<Arg>(xLow),
+                                                  std::forward<Arg>(xHi),
+                                                  std::forward<Args>(args)... );
     }
     
   public:
