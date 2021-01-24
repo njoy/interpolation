@@ -59,6 +59,70 @@ public:
     return (*iterator)( std::forward<Arg>(x), std::forward<Args>(args)... );
   }
 
+  template< typename Table, typename Arg, typename... Args >
+  auto integrate( Arg&& xL, Arg&& xH, Args&&... args ) const {
+    auto xLow = xL;
+    auto xHi = xH;
+    const bool reversed = xLow > xHi;
+
+    if ( reversed ) {
+      auto xLowTmp = xLow;
+      xLow = xHi;
+      xHi = xLowTmp;
+    }
+
+    // Integration may only be carried out over the function's valid domain
+    if (xLow < tableMin()) {
+      xLow = tableMin();
+    } else if (xLow > tableMax()) {
+      xLow = tableMax();
+    }
+
+    if (xHi > tableMax()) {
+      xHi = tableMax();
+    } else if (xHi < tableMin()) {
+      xHi = tableMin();
+    }
+
+    // Get region which contains xLow
+    auto region = ranges::lower_bound(this->core, xLow, ranges::less(),
+                  []( auto&& table ){ return table.tableMax(); } );
+
+    if (region->tableMin() > xLow) {
+      region = ranges::prev(region);
+    }
+
+    auto integral = (xLow - xLow) * region->y().front();
+    double xLowLim = xLow;
+    double xUppLim = xHi;
+    bool integrating = true;
+    while (integrating) {
+      if (xLowLim < region->tableMin()) {
+        xLowLim = region->tableMin();
+      }
+      
+      if (xUppLim > region->tableMax()) {
+        xUppLim = region->tableMax();
+      }
+
+      integral += region->integrate(xLowLim, xUppLim);
+
+      if (xUppLim == xHi) {
+        integrating = false;
+      } else {
+        xLowLim = xUppLim;
+        xUppLim = xHi;
+        region = ranges::next(region);
+      }
+    }
+
+    if (reversed) {
+      integral *= -1.;
+    }
+
+    return integral;
+  }
+
   auto cachedSearch() const {
     return this->core.front().cachedSearch();
   }

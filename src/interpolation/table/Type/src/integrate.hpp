@@ -43,7 +43,7 @@ auto integrate( const Xdata& xL, const Xdata& xH,
     auto hiIt = lowIt;
     hiIt = ranges::next(hiIt);
 
-    auto i = ranges::distance(this->x().begin(), low_it);
+    auto i = ranges::distance(this->x().begin(), lowIt);
 
     auto x1 = *lowIt;
     auto x2 = *hiIt;
