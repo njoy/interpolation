@@ -43,6 +43,7 @@ int main(){
   std::cout << myTable( 2.5 ) << std::endl;
   std::cout << myTable.domainMin() << ' ' << myTable.domainMax() << std::endl;
   std::cout << myTable.tableMin() << ' ' << myTable.tableMax() << std::endl;
+  std::cout << myTable.integrate(1., 3.) << std::endl;
 }
 ```
 
