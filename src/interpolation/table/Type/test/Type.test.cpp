@@ -46,6 +46,20 @@ SCENARIO("An interpolation table can be constructed"){
 	REQUIRE( 6.5 == myTable( 2.5, myTable.search() ) );
       }
 
+      THEN("the table can be integrated"){
+      REQUIRE(4. == myTable.integrate(1., 2.));
+      REQUIRE(6.5 == myTable.integrate(2., 3.));
+      REQUIRE(10.5 == myTable.integrate(1., 3.));
+      // When doing integral over wider range, integration limits get
+      // truncated to the table range by default.
+      REQUIRE(10.5 == myTable.integrate(0., 4.));
+
+      REQUIRE(-4. == myTable.integrate(2., 1.));
+      REQUIRE(-6.5 == myTable.integrate(3., 2.));
+      REQUIRE(-10.5 == myTable.integrate(3., 1.));
+      REQUIRE(-10.5 == myTable.integrate(4., 0.));
+      }
+
       THEN("the table handles discontinuities"){
 	REQUIRE( 5.0 == myTable( 2.0, myTable.search() ) );
       }
@@ -85,6 +99,13 @@ SCENARIO("An interpolation table can be constructed"){
       THEN("the table can be evaluated"){
 	REQUIRE( 6.5 == myTable( 2.5 ) );
 	REQUIRE( 6.5 == myTable( 2.5, myTable.search() ) );
+      }
+
+      THEN("the table can be integrated"){
+      REQUIRE(4. == myTable.integrate(1., 2.));
+      REQUIRE(6.5 == myTable.integrate(2., 3.));
+      REQUIRE(10.5 == myTable.integrate(1., 3.));
+      REQUIRE(10.5 == myTable.integrate(0., 4.));
       }
 
       THEN("the table can provide x-values"){
@@ -135,6 +156,18 @@ SCENARIO("An interpolation table can be constructed"){
 	REQUIRE( 6.5 == myTable( 2.5, search ) );
       }
 
+      THEN("the table can be integrated"){
+      REQUIRE(4. == myTable.integrate(1., 2.));
+      REQUIRE(6.5 == myTable.integrate(2., 3.));
+      REQUIRE(10.5 == myTable.integrate(1., 3.));
+      REQUIRE(10.5 == myTable.integrate(0., 4.));
+
+      REQUIRE(-4. == myTable.integrate(2., 1.));
+      REQUIRE(-6.5 == myTable.integrate(3., 2.));
+      REQUIRE(-10.5 == myTable.integrate(3., 1.));
+      REQUIRE(-10.5 == myTable.integrate(4., 0.));
+      }
+
       THEN("the table handles discontinuities"){
 	REQUIRE( 5.0 == myTable( 2.0, search ) );
 	REQUIRE( 5.0 == myTable( 2.0, search ) );
@@ -154,6 +187,18 @@ SCENARIO("An interpolation table can be constructed"){
       THEN("the table can be evaluated"){
 	REQUIRE( 6.5 * seconds == myTable( 2.5 * meter ) );
 	REQUIRE( 6.5 * seconds == myTable( 2.5 * meter, myTable.search() ) );
+      }
+
+      THEN("the table can be integrated"){
+      REQUIRE(4. * meter * seconds == myTable.integrate(1. * meter, 2. * meter));
+      REQUIRE(6.5 * meter * seconds == myTable.integrate(2. * meter, 3. * meter));
+      REQUIRE(10.5 * meter * seconds == myTable.integrate(1. * meter, 3. * meter));
+      REQUIRE(10.5 * meter * seconds == myTable.integrate(0. * meter, 4. * meter));
+
+      REQUIRE(-4. * meter * seconds == myTable.integrate(2. * meter, 1. * meter));
+      REQUIRE(-6.5 * meter * seconds == myTable.integrate(3. * meter, 2. * meter));
+      REQUIRE(-10.5 * meter * seconds == myTable.integrate(3. * meter, 1. * meter));
+      REQUIRE(-10.5 * meter * seconds == myTable.integrate(4. * meter, 0. * meter));
       }
 
       THEN("the table can provide x-values"){

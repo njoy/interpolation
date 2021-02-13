@@ -57,7 +57,9 @@ auto integrate( const Xdata& xL, const Xdata& xH,
       xUppLim = x2;
     }
 
-    integral += this->interpolant().integrate(xLowLim, xUppLim, x1, x2, y1, y2);
+    if(x1 != x2) {
+      integral += this->interpolant().integrate(xLowLim, xUppLim, x1, x2, y1, y2);
+    }
 
     if (xUppLim == xHi) {
       integrating = false;
