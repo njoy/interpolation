@@ -23,4 +23,5 @@ TEST_CASE("Example5"){
 
   REQUIRE( myTable( 2.5 * electronVolts ) == 6.0 * barns );
   REQUIRE( myTable( 2.5E-3 * kilo(electronVolts) ) == 6.0 * barns );
+  REQUIRE( myTable.integrate(1. * electronVolts, 3. * electronVolts) == 10. * electronVolts * barns );
 }

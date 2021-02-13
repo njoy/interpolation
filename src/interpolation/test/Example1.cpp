@@ -26,6 +26,7 @@ TEST_CASE("Example1"){
 
   // Interpolation tables are function objects and are callable
   REQUIRE( myTable( 2.5 ) == 6.0 );
+  REQUIRE( myTable.integrate(1., 2.5) == 6.75 );
   REQUIRE( myTable.domainMin() == -infinity<double>() );
   REQUIRE( myTable.domainMax() == infinity<double>() );
   REQUIRE( myTable.tableMin() == 1.0 );
