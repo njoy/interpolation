@@ -35,5 +35,15 @@ SCENARIO("An interpolation table can be constructed"
       REQUIRE_THROWS( myTable( -1.0 ) );
       REQUIRE_THROWS( myTable( -1.0, myTable.search() ) );
     }
+
+    THEN("the table can be integrated in the center interval"){
+      REQUIRE( 10. == myTable.integrate(1., 3.) );
+      REQUIRE( 10. == myTable.integrate(1., 3., myTable.search()) );
+    }
+
+    THEN("the table will throw for integration limits less than the domain min"){
+      REQUIRE_THROWS( myTable.integrate(-1., 3.) );
+      REQUIRE_THROWS( myTable.integrate(-1., 3., myTable.search()) );
+    }
   }
 }
