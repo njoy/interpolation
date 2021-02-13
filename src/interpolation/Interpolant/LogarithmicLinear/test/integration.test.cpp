@@ -12,8 +12,8 @@ SCENARIO("The LogarithmicLinear interpolant computes the correct integral",
   std::vector<double> xValues {10, 1, 1E-1};
   auto f1 = []( double x ){ return 13.2 * pow(3.14, 0.002*x); };
   auto f2 = []( double x ){ return -13.2 * pow(3.14, 0.002*x); };
-  auto F1 = []( double xl, double xh ){ return (13.2*(pow(3.14, 0.002*xh) - pow(3.14, 0.002*xl)))/(0.002*std::log(3.14));};
-  auto F2 = []( double xl, double xh ){ return (-13.2*(pow(3.14, 0.002*xh) - pow(3.14, 0.002*xl)))/(0.002*std::log(3.14));};
+  auto F1 = []( double xl, double xh ){ return (13.2/(0.002*std::log(3.14)))*(pow(3.14, 0.002*xh) - pow(3.14, 0.002*xl));};
+  auto F2 = []( double xl, double xh ){ return (-13.2/(0.002*std::log(3.14)))*(pow(3.14, 0.002*xh) - pow(3.14, 0.002*xl));};
   //auto F2 = []( double x ){ return (-13.2*pow(3.14, 0.002*x))/(0.002*std::log(3.14));};
   auto avg = []( double xLeft, double xRight ){ return 0.5 * ( xLeft + xRight ); };
 
@@ -21,7 +21,7 @@ SCENARIO("The LogarithmicLinear interpolant computes the correct integral",
     []( double reference, double trial ){
     auto error = std::abs( (trial - reference)
                            / ( ( reference != 0 ) ? reference : 1.0 ) );
-    return error > 1E-15; };
+    return error > 1E-13; };
 
   auto iterator = xValues.begin();
   auto last = std::prev( xValues.end() );
@@ -64,7 +64,7 @@ SCENARIO("The LogarithmicLinear integration is compatible with units",
     auto error = std::abs( (reference - trial).value
 			   / ( ( reference.value != 0 ) ?
 			       reference.value : 1.0 ) );
-    return error > 1E-15; };
+    return error > 1E-13; };
 
   auto units = xValues |
     ranges::view::take( xValues.size() - 1 ) |
@@ -82,7 +82,7 @@ SCENARIO("The LogarithmicLinear integration is compatible with units",
     REQUIRE( not excessiveError( F2(xBar) - F2(xLow),
                                  LogarithmicLinear::integrate
                                  ( xLow, xBar, xLeft, xRight, y2Left, y2Right ) ) );
-
+    
     REQUIRE( not excessiveError( F1(xHi) - F1(xBar),
                                  LogarithmicLinear::integrate
                                  ( xBar, xHi, xLeft, xRight, y1Left, y1Right ) ) );
