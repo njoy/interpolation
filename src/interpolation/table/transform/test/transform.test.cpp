@@ -77,6 +77,10 @@ SCENARIO("An interpolation table can be constructed with transforms"){
 	REQUIRE( std::exp(4.0) == trial( std::exp(1.5), trial.search() ) ) ;
       }
 
+			THEN("tables with a transform will throw upon attempted integration") {
+				REQUIRE_THROWS(trial.integrate(1., 3.));
+			}
+
       THEN("lifetime of iterator is not limited to the "){
 	auto persistance = []( auto&& arg ){ return arg.begin(); };
 	auto maybe = persistance( trial.x() );
