@@ -132,6 +132,13 @@ SCENARIO("An interpolation table can be constructed"){
 	REQUIRE( 6.5 == myTable( 2.5, myTable.search() ) );
       }
 
+      THEN("the table can be integrated"){
+      REQUIRE(4. == myTable.integrate(1., 2.));
+      REQUIRE(6.5 == myTable.integrate(2., 3.));
+      REQUIRE(10.5 == myTable.integrate(1., 3.));
+      REQUIRE(10.5 == myTable.integrate(0., 4.));
+      }
+
       THEN("the table handles discontinuities"){
 	REQUIRE( 5.0 == myTable( 2.0, myTable.search() ) );
       }
