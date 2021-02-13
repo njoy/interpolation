@@ -39,6 +39,8 @@ SCENARIO("An variant interpolation table can be constructed"){
       REQUIRE( correct );
 
       REQUIRE( 6.0 == myTable(2.5) );
+      REQUIRE( 10. == myTable.integrate(1., 3.) );
+      REQUIRE( -10. == myTable.integrate(3., 1.) );
       REQUIRE( -infinity<double>() == myTable.domainMin() );
       REQUIRE( infinity<double>() == myTable.domainMax() );
       REQUIRE( xGrid.front() == myTable.tableMin() );
