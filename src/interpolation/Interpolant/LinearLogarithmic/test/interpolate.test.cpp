@@ -52,8 +52,6 @@ SCENARIO("The LinearLogarithmic interpolant computes is compatible with units",
   std::vector< double > xValues{ 1E-2, 1, 10 };
   auto f1 = []( auto x ){ return 13.2 * std::log(3.2 * x.value) * barn; };
   auto f2 = []( auto x ){ return -5.6 * std::log(2.4 * x.value) * barn; };
-  auto F1 = []( auto x ){return 13.2*x.value*(std::log(3.2*x.value)-1.) * barn * electronVolts;};
-  auto F2 = []( auto x ){return -5.6*x.value*(std::log(2.4*x.value)-1.) * barn * electronVolts;};
  
   auto avg = []( auto xLeft, auto xRight ) { return 0.5 * ( xLeft + xRight ); };
 
