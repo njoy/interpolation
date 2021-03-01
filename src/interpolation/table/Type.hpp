@@ -40,6 +40,7 @@ public:
   static constexpr Xdata domainMax(){ return infinity<Xdata>(); }
 
   #include "interpolation/table/Type/src/evaluate.hpp"
+  #include "interpolation/table/Type/src/integrate.hpp"
 };
 
 template< typename InterpolationAlgorithm,

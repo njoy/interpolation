@@ -32,5 +32,13 @@ SCENARIO("An interpolation table can be constructed"
     THEN("the table will throw in the left interval"){
       REQUIRE_THROWS( myTable( 0.0, myTable.search() ) );
     }
+
+    THEN("the table can be integrated in the center interval") {
+      REQUIRE( 10. == myTable.integrate(1., 3.) );
+    }
+
+    THEN("the table will throw when attempting to integrate left of the interval") {
+      REQUIRE_THROWS( myTable.integrate(0., 3.) );
+    }
   }
 }

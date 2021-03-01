@@ -25,6 +25,9 @@ SCENARIO("An asymptotic right interval can be applied to a table"){
 
       REQUIRE( myTable(3.5) == 8.0 );
       REQUIRE( myTable(9.0) == 17.0 );
+
+      REQUIRE( myTable.integrate(1., 8.) == 70.);
+      REQUIRE( myTable.integrate(1., 9.) == 87.);
     }
 
     WHEN("constructing a Table without the search method"){
@@ -63,6 +66,9 @@ SCENARIO("An asymptotic right interval can be applied to a table"){
 
       REQUIRE( myTable(3.5) == 8.0 );
       REQUIRE( myTable(9.0) == 17.0 );
+
+      REQUIRE( myTable.integrate(1., 8.) == 70.);
+      REQUIRE( myTable.integrate(1., 9.) == 87.);
     }
   }
 }

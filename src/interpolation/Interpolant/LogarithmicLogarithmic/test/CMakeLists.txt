@@ -1,6 +1,7 @@
 
 add_executable( interpolation.Interpolant.LogarithmicLogarithmic.test
                 verifyXGridAssumptions.test.cpp
+                integration.test.cpp
                 invert.test.cpp
                 LogarithmicLogarithmic.test.cpp
                 verifyYGridAssumptions.test.cpp

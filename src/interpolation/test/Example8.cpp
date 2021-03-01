@@ -52,4 +52,5 @@ TEST_CASE("Example 8"){
   Tab1 myTable( std::move(core) );
 
   REQUIRE( myTable( 2.5 ) == 6.0 );
+  REQUIRE( myTable.integrate(1., 3.) == 10. );
 }

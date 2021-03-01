@@ -33,5 +33,13 @@ SCENARIO("An interpolation table can be constructed with a domain maximum"){
     THEN("the table will throw for values greater than the domain max"){
       REQUIRE_THROWS( myTable( 5.0 ) );
     }
+
+    THEN("the table can be integrated in the center interval") {
+      REQUIRE( 10. == myTable.integrate(1., 3.) );
+    }
+
+    THEN("the table will throw for integration limits greater than the domain max") {
+      REQUIRE_THROWS( myTable.integrate(1., 5.) );
+    }
   }
 }

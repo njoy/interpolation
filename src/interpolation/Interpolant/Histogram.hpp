@@ -5,6 +5,11 @@ struct Histogram : public Interpolant {
   template< typename Yarg, typename X, typename Y >
   static auto invert( Yarg&&, X&& xLeft, X&&, Y&&, Y&& ){ return xLeft; }
 
+  template< typename Xarg, typename X, typename Y >
+  static auto integrate(Xarg&& xLow, Xarg&& xHi, X&&, X&&, Y&& yLeft, Y&&) {
+    return yLeft * (xHi - xLow);
+  }
+
   template< typename Range >
   static void verifyXGridAssumptions( Range&& range ){
     auto it = ranges::adjacent_find( range );

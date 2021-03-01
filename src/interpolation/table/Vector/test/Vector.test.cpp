@@ -64,6 +64,9 @@ SCENARIO("An variant interpolation table can be constructed"){
 
       REQUIRE( core[0](2.5) == vc(2.5) );
       REQUIRE( core[1](6.5) == vc(6.5) );
+
+			REQUIRE( core[0].integrate(1.,3.) + core[1].integrate(3.,8.) == vc.integrate(1., 8.) );
+			REQUIRE( core[0].integrate(1.,3.) + core[1].integrate(3.,5.) == vc.integrate(1., 5.) );
     }
 
     SECTION("exceptional behavior"){

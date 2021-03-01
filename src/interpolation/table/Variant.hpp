@@ -121,6 +121,17 @@ protected:
       }, this->core );
   }
 
+  template< typename Table, typename Arg, typename... Args >
+  auto integrate( Arg&& xLow, Arg&& xHi, Args&&... args ) const {
+    return std::visit( [&]( auto&& core ){ return core.integrate(
+                                                  std::forward<Arg>(xLow),
+                                                  std::forward<Arg>(xHi),
+                                                  std::forward<Args>(args)... );
+                                          },
+                        this->core
+                      );
+  }
+
 public:  
   template< typename Arg >
   Variant( Arg&& arg ) : core( std::forward< Arg >( arg ) ){}

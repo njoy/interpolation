@@ -32,6 +32,12 @@ public:
     return Parent:: template evaluate<Parent>( std::forward<Arg>(x),
 					       std::forward<CallArgs>(args)... );
   }
+
+  template< typename Arg, typename... CallArgs >
+  auto integrate(Arg&& xLow, Arg&& xHi, CallArgs&&... args) const {
+    return Parent:: template integrate<Parent>( std::forward<Arg>(xLow),
+					       std::forward<Arg>(xHi), std::forward<CallArgs>(args)... );
+  }
 };
 
 namespace table {
