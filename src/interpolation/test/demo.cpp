@@ -9,6 +9,7 @@
 #include "boost/hana/ext/std/tuple.hpp"
 #include "boost/hana/ext/std/pair.hpp"
 
+#include "range/v3/range/conversion.hpp"
 #include "range/v3/view/take_exactly.hpp"
 #include "range/v3/view/zip.hpp"
 
@@ -57,54 +58,54 @@ SCENARIO("Lets zip some vectors"){
   const int size = 8;
 
   auto energyView = XSS
-    | ranges::view::take_exactly( size );
+    | ranges::views::take_exactly( size );
 
   std::cout << energyView << std::endl;
 
   auto totalView = XSS
-    | ranges::view::drop_exactly( size )
-    | ranges::view::take_exactly( size );
+    | ranges::views::drop_exactly( size )
+    | ranges::views::take_exactly( size );
 
   std::cout << totalView << std::endl;
 
   auto absorptionView = XSS
-    | ranges::view::drop_exactly( size * 2 )
-    | ranges::view::take_exactly( size );
+    | ranges::views::drop_exactly( size * 2 )
+    | ranges::views::take_exactly( size );
 
   std::cout << absorptionView << std::endl;
 
   auto scatterView = XSS
-    | ranges::view::drop_exactly( size * 3 )
-    | ranges::view::take_exactly( size );
+    | ranges::views::drop_exactly( size * 3 )
+    | ranges::views::take_exactly( size );
 
   std::cout << scatterView << std::endl;
 
   auto zippedVector =
-    ranges::view::zip( energyView, scatterView, absorptionView, totalView )
-    | ranges::to_vector;
+    ranges::to< std::vector< std::tuple< double, double, double, double > > >(
+      ranges::views::zip( energyView, scatterView, absorptionView, totalView ) );
 
   std::cout << zippedVector << std::endl;
 
   auto energy = zippedVector
-    | ranges::view::transform( []( const auto& arg ){
+    | ranges::views::transform( []( const auto& arg ){
 	return std::get<0>(arg) * mega(electronVolts); } );
 
   std::cout << energy << std::endl;
 
   auto scattering = zippedVector
-    | ranges::view::transform( []( const auto& arg ){
+    | ranges::views::transform( []( const auto& arg ){
 	return std::get<1>(arg) * barn; } );
 
   std::cout << scattering << std::endl;
 
   auto absorption = zippedVector
-    | ranges::view::transform( []( const auto& arg ){
+    | ranges::views::transform( []( const auto& arg ){
 	return std::get<2>(arg) * barn; } );
 
   std::cout << absorption << std::endl;
 
   auto total = zippedVector
-    | ranges::view::transform( []( const auto& arg ){
+    | ranges::views::transform( []( const auto& arg ){
 	return std::get<3>(arg) * barn; } );
 
   std::cout << total << std::endl;

@@ -72,11 +72,11 @@ SCENARIO("An interpolation table can be constructed"){
       }
 
       THEN("the table can provide x-values"){
-	REQUIRE( ranges::equal( myTable.x(), xGrid ) );
+	REQUIRE( ranges::cpp20::equal( myTable.x(), xGrid ) );
       }
 
       THEN("the table can provide y-values"){
-	REQUIRE( ranges::equal( myTable.y(), yGrid ) );
+	REQUIRE( ranges::cpp20::equal( myTable.y(), yGrid ) );
       }
 
       THEN("the table can provide interval limits"){

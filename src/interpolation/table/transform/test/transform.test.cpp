@@ -53,8 +53,8 @@ SCENARIO("An interpolation table can be constructed with transforms"){
 
       THEN("post-transforms agree with pre-transforms"){
 	auto exponential = []( auto&& arg ){ return std::exp(arg); };
-	auto expX = xGrid | ranges::view::transform( exponential );
-	auto expY = yGrid | ranges::view::transform( exponential );
+	auto expX = xGrid | ranges::views::transform( exponential );
+	auto expY = yGrid | ranges::views::transform( exponential );
 
 	Table< table::Type< LinearLinear,
 			    table::search::Binary,
@@ -62,12 +62,12 @@ SCENARIO("An interpolation table can be constructed with transforms"){
 			    decltype(expX), decltype(expY) > >
 	  reference( njoy::utility::copy(expX), njoy::utility::copy(expY) );
 
-	ranges::for_each( ranges::view::zip( reference.x(), trial.x() ),
+	ranges::cpp20::for_each( ranges::views::zip( reference.x(), trial.x() ),
 			  []( auto&& pair ){
 			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );
 
-	ranges::for_each( ranges::view::zip( reference.y(), trial.y() ),
+	ranges::cpp20::for_each( ranges::views::zip( reference.y(), trial.y() ),
 			  []( auto&& pair ){
 			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );
@@ -135,8 +135,8 @@ SCENARIO("Transforms can change the input and output types"){
 	trial( njoy::utility::copy(xGrid), njoy::utility::copy(yGrid) );
 
       THEN("post-transforms agree with pre-transforms"){
-	auto xMeters = xGrid | ranges::view::transform( applyUnit<Meter> );
-	auto ySeconds = yGrid | ranges::view::transform( applyUnit<Second> );
+	auto xMeters = xGrid | ranges::views::transform( applyUnit<Meter> );
+	auto ySeconds = yGrid | ranges::views::transform( applyUnit<Second> );
 
 	Table< table::Type< LogarithmicLogarithmic,
 			    table::search::Binary,
@@ -144,12 +144,12 @@ SCENARIO("Transforms can change the input and output types"){
 			    decltype(xMeters), decltype(ySeconds) > >
 	reference( njoy::utility::copy(xMeters), njoy::utility::copy(ySeconds) );
 
-	ranges::for_each( ranges::view::zip( reference.x(), trial.x() ),
+	ranges::cpp20::for_each( ranges::views::zip( reference.x(), trial.x() ),
 			  []( auto&& pair ){
 			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );
 
-	ranges::for_each( ranges::view::zip( reference.y(), trial.y() ),
+	ranges::cpp20::for_each( ranges::views::zip( reference.y(), trial.y() ),
 			  []( auto&& pair ){
 			    REQUIRE( ( std::get<0>(pair) == std::get<1>(pair) ) );
 			  } );

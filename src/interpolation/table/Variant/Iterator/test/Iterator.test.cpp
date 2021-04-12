@@ -12,12 +12,12 @@ SCENARIO("Degenerate"){
   using viter = std::vector<double>::iterator;
   bool same = std::is_same< Iterator< viter >::Type, viter >::value;
   REQUIRE(same);
-  
+
   same = std::is_same< Iterator< viter, viter >::Type, viter >::value;
   REQUIRE(same);
 
   using aiter = std::array<double, 10>::iterator;
-  
+
   same = std::is_same< Iterator< double*, aiter >::Type, aiter >::value;
   REQUIRE(same);
 }
@@ -27,33 +27,33 @@ struct echo;
 
 SCENARIO("Elaborate"){
   std::vector<int> vi{ 0, 1, 2, 3 };
-  auto vt = vi | ranges::view::transform([]( auto&& arg ){ return arg + 1; });
+  auto vt = vi | ranges::views::transform([]( auto&& arg ){ return arg + 1; });
   std::array<int, 4> ai{{ 0, 1, 2, 3 }};
 
   using viter = std::vector<int>::iterator;
   using vtiter = decltype( vt.begin() );
   using aiter = std::array<int, 10>::iterator;
-  
-  bool deref = 
+
+  bool deref =
     std::is_same< int&, decltype( *( std::declval< viter >() ) ) >::value;
 
   REQUIRE( deref );
-  
-  deref = 
+
+  deref =
     std::is_same
     < const int&,
       decltype( *( std::declval< Iterator< viter, aiter >::Type >() ) ) >::value;
 
   REQUIRE( deref );
-  
-  deref = 
+
+  deref =
     not std::is_same
     < int,
       decltype( *( std::declval< Iterator< viter, aiter >::Type >() ) ) >::value;
 
   REQUIRE( deref );
-  
-  deref = 
+
+  deref =
     std::is_same
     < int,
       decltype( *( std::declval< Iterator< vtiter, aiter >::Type >() ) ) >::value;

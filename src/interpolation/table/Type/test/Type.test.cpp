@@ -51,11 +51,11 @@ SCENARIO("An interpolation table can be constructed"){
       }
 
       THEN("the table can provide x-values"){
-	REQUIRE( ranges::equal( myTable.x(), xGrid ) );
+	REQUIRE( ranges::cpp20::equal( myTable.x(), xGrid ) );
       }
 
       THEN("the table can provide y-values"){
-	REQUIRE( ranges::equal( myTable.y(), yGrid ) );
+	REQUIRE( ranges::cpp20::equal( myTable.y(), yGrid ) );
       }
 
       THEN("the table can provide interval limits"){
@@ -73,8 +73,8 @@ SCENARIO("An interpolation table can be constructed"){
     }
 
     THEN("interpolation tables can be constructed which refs each component"){
-      auto x = xGrid | ranges::view::all;
-      auto y = yGrid | ranges::view::all;
+      auto x = xGrid | ranges::cpp20::views::all;
+      auto y = yGrid | ranges::cpp20::views::all;
 
       Table< table::Type< LinearLinear,
 			  table::search::Binary,
@@ -88,11 +88,11 @@ SCENARIO("An interpolation table can be constructed"){
       }
 
       THEN("the table can provide x-values"){
-	REQUIRE( ranges::equal( myTable.x(), xGrid ) );
+	REQUIRE( ranges::cpp20::equal( myTable.x(), xGrid ) );
       }
 
       THEN("the table can provide y-values"){
-	REQUIRE( ranges::equal( myTable.y(), yGrid ) );
+	REQUIRE( ranges::cpp20::equal( myTable.y(), yGrid ) );
       }
     }
 
@@ -142,8 +142,8 @@ SCENARIO("An interpolation table can be constructed"){
     }
 
     THEN("interpolation tables can be constructed which transforms each component"){
-      auto x = xGrid | ranges::view::transform( applyUnit<Meter> );
-      auto y = yGrid | ranges::view::transform( applyUnit<Second> );
+      auto x = xGrid | ranges::views::transform( applyUnit<Meter> );
+      auto y = yGrid | ranges::views::transform( applyUnit<Second> );
 
       Table< table::Type< LinearLinear,
 			  table::search::Binary,
@@ -157,11 +157,11 @@ SCENARIO("An interpolation table can be constructed"){
       }
 
       THEN("the table can provide x-values"){
-      	REQUIRE( ranges::equal( myTable.x(), x ) );
+      	REQUIRE( ranges::cpp20::equal( myTable.x(), x ) );
       }
 
       THEN("the table can provide y-values"){
-       	REQUIRE( ranges::equal( myTable.y(), y ) );
+       	REQUIRE( ranges::cpp20::equal( myTable.y(), y ) );
       }
 
       THEN("the table can provide interval limits"){
