@@ -5,9 +5,9 @@ include( FetchContent )
 # Declare project dependencies
 #######################################################################
 
-FetchContent_Declare( range-v3-adapter
-    GIT_REPOSITORY  https://github.com/njoy/range-v3-adapter
-    GIT_TAG         origin/master
+FetchContent_Declare( range-v3
+    GIT_REPOSITORY  https://github.com/ericniebler/range-v3
+    GIT_TAG         0.11.0
     GIT_SHALLOW     TRUE
     )
 
@@ -34,7 +34,7 @@ FetchContent_Declare( dimwits
 #######################################################################
 
 FetchContent_MakeAvailable(
-    range-v3-adapter
+    range-v3
     Log
     header-utilities
     dimwits
