@@ -27,7 +27,7 @@ struct echo;
 
 SCENARIO("Elaborate"){
   std::vector<int> vi{ 0, 1, 2, 3 };
-  auto vt = vi | ranges::views::transform([]( auto&& arg ){ return arg + 1; });
+  auto vt = vi | ranges::cpp20::views::transform([]( auto&& arg ){ return arg + 1; });
   std::array<int, 4> ai{{ 0, 1, 2, 3 }};
 
   using viter = std::vector<int>::iterator;

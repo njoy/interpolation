@@ -18,7 +18,7 @@ struct X {
       decltype( Transform::apply( std::declval< typename Parent::Xdata >() ) );
 
     auto x() const {
-      return Parent::x() | ranges::views::transform(
+      return Parent::x() | ranges::cpp20::views::transform(
 	[](auto&& arg ){ return Transform::apply( arg ); } );
     }
 
@@ -52,7 +52,7 @@ struct Y {
       decltype( Transform::apply( std::declval< typename Parent::Ydata >() ) );
 
     auto y() const {
-      return Parent::y() | ranges::views::transform(
+      return Parent::y() | ranges::cpp20::views::transform(
 	[](auto&& arg ){ return Transform::apply( arg ); } );
     }
 

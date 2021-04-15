@@ -65,7 +65,7 @@ SCENARIO("LogarithmicLinear computes the correct inversion with units",
 
   auto units = xValues |
     ranges::views::take_exactly( xValues.size() - 1 ) |
-    ranges::views::transform( []( auto arg ){ return arg * electronVolts; } );
+    ranges::cpp20::views::transform( []( auto arg ){ return arg * electronVolts; } );
 
   auto iterator = units.begin();
   auto last = units.end();

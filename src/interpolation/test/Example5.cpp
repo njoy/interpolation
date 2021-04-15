@@ -13,10 +13,10 @@ TEST_CASE("Example5"){
   std::vector< double > yGrid = { 3.0, 5.0, 7.0 };
 
   auto energy = xGrid
-    | ranges::views::transform( []( auto&& arg ){ return arg * electronVolts; } );
+    | ranges::cpp20::views::transform( []( auto&& arg ){ return arg * electronVolts; } );
 
   auto crossSection = yGrid
-    | ranges::views::transform( []( auto&& arg ){ return arg * barns; } );
+    | ranges::cpp20::views::transform( []( auto&& arg ){ return arg * barns; } );
 
   auto myTable =
     table::make< LinearLinear >( std::move(energy), std::move(crossSection) );

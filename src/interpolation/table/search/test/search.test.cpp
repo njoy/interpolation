@@ -17,7 +17,7 @@ SCENARIO("Binary"){
   }
   SECTION("double precision floats with units"){
     auto meterList =
-      list | ranges::views::transform( []( auto&& arg ){ return arg * meters; } );
+      list | ranges::cpp20::views::transform( []( auto&& arg ){ return arg * meters; } );
     auto iterator = table::search::Binary::apply( meterList, 2.0 * meters );
     REQUIRE( ranges::cpp20::distance( meterList.begin(), iterator ) == 2 );
   }
@@ -30,7 +30,7 @@ SCENARIO("FromLeft"){
   }
   SECTION("double precision floats with units"){
     auto meterList =
-      list | ranges::views::transform( []( auto&& arg ){ return arg * meters; } );
+      list | ranges::cpp20::views::transform( []( auto&& arg ){ return arg * meters; } );
     auto iterator = table::search::FromLeft::apply( meterList, 2.0 * meters );
     REQUIRE( ranges::cpp20::distance( meterList.begin(), iterator ) == 2 );
   }
@@ -43,7 +43,7 @@ SCENARIO("FromRight"){
   }
   SECTION("double precision floats with units"){
     auto meterList =
-      list | ranges::views::transform( []( auto&& arg ){ return arg * meters; } );
+      list | ranges::cpp20::views::transform( []( auto&& arg ){ return arg * meters; } );
     auto iterator = table::search::FromRight::apply( meterList, 2.0 * meters );
     REQUIRE( ranges::cpp20::distance( meterList.begin(), iterator ) == 2 );
   }

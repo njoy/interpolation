@@ -87,25 +87,25 @@ SCENARIO("Lets zip some vectors"){
   std::cout << zippedVector << std::endl;
 
   auto energy = zippedVector
-    | ranges::views::transform( []( const auto& arg ){
+    | ranges::cpp20::views::transform( []( const auto& arg ){
 	return std::get<0>(arg) * mega(electronVolts); } );
 
   std::cout << energy << std::endl;
 
   auto scattering = zippedVector
-    | ranges::views::transform( []( const auto& arg ){
+    | ranges::cpp20::views::transform( []( const auto& arg ){
 	return std::get<1>(arg) * barn; } );
 
   std::cout << scattering << std::endl;
 
   auto absorption = zippedVector
-    | ranges::views::transform( []( const auto& arg ){
+    | ranges::cpp20::views::transform( []( const auto& arg ){
 	return std::get<2>(arg) * barn; } );
 
   std::cout << absorption << std::endl;
 
   auto total = zippedVector
-    | ranges::views::transform( []( const auto& arg ){
+    | ranges::cpp20::views::transform( []( const auto& arg ){
 	return std::get<3>(arg) * barn; } );
 
   std::cout << total << std::endl;

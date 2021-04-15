@@ -66,7 +66,7 @@ SCENARIO("LinearLogarithmic computes the correct inversion with units",
 
   auto units = xValues |
     ranges::cpp20::views::take( xValues.size() - 1 ) |
-    ranges::views::transform( []( auto arg ){ return arg * electronVolts; } );
+    ranges::cpp20::views::transform( []( auto arg ){ return arg * electronVolts; } );
 
   auto iterator = units.begin();
   auto last = units.end();

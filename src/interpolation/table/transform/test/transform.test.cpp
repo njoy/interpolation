@@ -135,8 +135,8 @@ SCENARIO("Transforms can change the input and output types"){
 	trial( njoy::utility::copy(xGrid), njoy::utility::copy(yGrid) );
 
       THEN("post-transforms agree with pre-transforms"){
-	auto xMeters = xGrid | ranges::views::transform( applyUnit<Meter> );
-	auto ySeconds = yGrid | ranges::views::transform( applyUnit<Second> );
+	auto xMeters = xGrid | ranges::cpp20::views::transform( applyUnit<Meter> );
+	auto ySeconds = yGrid | ranges::cpp20::views::transform( applyUnit<Second> );
 
 	Table< table::Type< LogarithmicLogarithmic,
 			    table::search::Binary,
