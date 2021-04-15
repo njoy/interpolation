@@ -22,7 +22,7 @@ FetchContent_Declare( hana-adapter
 
 FetchContent_Declare( header-utilities
     GIT_REPOSITORY  https://github.com/njoy/header-utilities
-    GIT_TAG         918640514e23d9adbbc7ab4fc499696e309fd054
+    GIT_TAG         cc2610fee15e255c151e8e22aca1e8b3d1a96b39
     )
 
 FetchContent_Declare( Log
@@ -32,7 +32,7 @@ FetchContent_Declare( Log
 
 FetchContent_Declare( range-v3
     GIT_REPOSITORY  https://github.com/ericniebler/range-v3
-    GIT_TAG         0.11.0
+    GIT_TAG         4989f3e9ff2efee1852942bb9328ef121369ba02 # tag: 0.11.0
     )
 
 FetchContent_Declare( spdlog
