@@ -32,20 +32,20 @@ SCENARIO("An asymptotic right interval can be applied to a table"){
       const auto rightSize = 6;
 
       auto xLeft = xGrid
-	| ranges::view::drop_exactly( 0 )
-	| ranges::view::take_exactly( leftSize );
+	| ranges::views::drop_exactly( 0 )
+	| ranges::views::take_exactly( leftSize );
 
       auto yLeft = yGrid
-	| ranges::view::drop_exactly( 0 )
-	| ranges::view::take_exactly( leftSize );
+	| ranges::views::drop_exactly( 0 )
+	| ranges::views::take_exactly( leftSize );
 
       auto xRight = xGrid
-	| ranges::view::drop_exactly( leftSize - 1 )
-	| ranges::view::take_exactly( rightSize );
+	| ranges::views::drop_exactly( leftSize - 1 )
+	| ranges::views::take_exactly( rightSize );
 
       auto yRight = yGrid
-	| ranges::view::drop_exactly( leftSize - 1 )
-	| ranges::view::take_exactly( rightSize );
+	| ranges::views::drop_exactly( leftSize - 1 )
+	| ranges::views::take_exactly( rightSize );
 
       using Component = Table< table::Type< LinearLinear,
 					    table::search::Binary,

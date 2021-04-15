@@ -13,7 +13,7 @@ TEST_CASE("Example 8"){
   std::vector< double > yGrid = { 3.0, 5.0, 7.0, 6.0, 2.0, 9.0, 8.0, 5.0, 1.0,  0.0 };
 
   using Partition =
-    decltype( xGrid | ranges::view::drop_exactly(0) | ranges::view::take_exactly(0) );
+    decltype( xGrid | ranges::views::drop_exactly(0) | ranges::views::take_exactly(0) );
 
   using Law1 =
     decltype( table::make< Histogram >( std::declval<Partition>(),
@@ -41,8 +41,8 @@ TEST_CASE("Example 8"){
 
   auto partition = []( auto&& range, int drop, int take ){
     return range
-           | ranges::view::drop_exactly(drop)
-           | ranges::view::take_exactly(take);
+           | ranges::views::drop_exactly(drop)
+           | ranges::views::take_exactly(take);
   };
 
   std::vector< ENDFvariant > core;

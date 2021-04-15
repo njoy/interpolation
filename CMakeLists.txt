@@ -36,6 +36,8 @@ set( REPOSITORIES "release"
     "Options for where to fetch repositories: develop, release, local"
     )
 
+message( STATUS "Using ${REPOSITORIES} repositories" )
+
 if( REPOSITORIES STREQUAL "develop" )
     include( cmake/develop_dependencies.cmake )
 
@@ -56,7 +58,7 @@ add_library( interpolation INTERFACE
     )
 target_include_directories( interpolation INTERFACE src/ )
 target_link_libraries( interpolation
-    INTERFACE range-v3-adapter
+    INTERFACE range-v3
     INTERFACE Log
     INTERFACE header-utilities
     INTERFACE dimwits

@@ -1,7 +1,7 @@
 struct Interpolant {
   template< typename Range >
   static void verifyXGridAssumptions( Range&& ){}
-  
+
   template< typename Range >
   static void verifyYGridAssumptions( Range&& ){}
 
@@ -9,14 +9,14 @@ struct Interpolant {
   static auto findChangeOfSign( Range&& range ){
     const auto& first = range.front();
     const auto zero = 0 * first;
-    const auto it = 
-      ( first > zero ) ? ranges::find_if( range,
+    const auto it =
+      ( first > zero ) ? ranges::cpp20::find_if( range,
     		                          [&]( auto&& x ){ return x <= zero; } ) :
-      ( first < zero ) ? ranges::find_if( range,
+      ( first < zero ) ? ranges::cpp20::find_if( range,
     		                          [&]( auto&& x ){ return x >= zero; } ) :
-                         ranges::find_if( range,
+                         ranges::cpp20::find_if( range,
     					  [&]( auto&& x ){ return x != zero; } );
-    return ( it == range.end() ) ? it : ranges::prev( it ); 
+    return ( it == range.end() ) ? it : ranges::cpp20::prev( it ); 
   }
 };
 

@@ -20,20 +20,20 @@ SCENARIO("An variant interpolation table can be constructed"){
       const auto rightSize = 6;
 
       auto xLeft = xGrid
-	| ranges::view::drop_exactly( 0 )
-	| ranges::view::take_exactly( leftSize );
+	| ranges::views::drop_exactly( 0 )
+	| ranges::views::take_exactly( leftSize );
 
       auto yLeft = yGrid
-	| ranges::view::drop_exactly( 0 )
-	| ranges::view::take_exactly( leftSize );
+	| ranges::views::drop_exactly( 0 )
+	| ranges::views::take_exactly( leftSize );
 
       auto xRight = xGrid
-	| ranges::view::drop_exactly( leftSize - 1 )
-	| ranges::view::take_exactly( rightSize );
+	| ranges::views::drop_exactly( leftSize - 1 )
+	| ranges::views::take_exactly( rightSize );
 
       auto yRight = yGrid
-	| ranges::view::drop_exactly( leftSize - 1 )
-	| ranges::view::take_exactly( rightSize );
+	| ranges::views::drop_exactly( leftSize - 1 )
+	| ranges::views::take_exactly( rightSize );
 
       using Component = Table< table::Type< LinearLinear,
 					    table::search::Binary,
@@ -57,9 +57,9 @@ SCENARIO("An variant interpolation table can be constructed"){
       REQUIRE( not vc.specifiesDomainMax() );
 
       bool correct;
-      correct = ranges::equal( vc.x(), xGrid );
+      correct = ranges::cpp20::equal( vc.x(), xGrid );
       REQUIRE(correct);
-      correct = ranges::equal( vc.y(), yGrid );
+      correct = ranges::cpp20::equal( vc.y(), yGrid );
       REQUIRE(correct);
 
       REQUIRE( core[0](2.5) == vc(2.5) );
@@ -72,20 +72,20 @@ SCENARIO("An variant interpolation table can be constructed"){
 
       GIVEN("a gap"){
         auto xLeft = xGrid
-	  | ranges::view::drop_exactly( 0 )
-	  | ranges::view::take_exactly( leftSize );
+	  | ranges::views::drop_exactly( 0 )
+	  | ranges::views::take_exactly( leftSize );
 
 	auto yLeft = yGrid
-	  | ranges::view::drop_exactly( 0 )
-	  | ranges::view::take_exactly( leftSize );
+	  | ranges::views::drop_exactly( 0 )
+	  | ranges::views::take_exactly( leftSize );
 
 	auto xRight = xGrid
-	  | ranges::view::drop_exactly( leftSize )
-	  | ranges::view::take_exactly( rightSize );
+	  | ranges::views::drop_exactly( leftSize )
+	  | ranges::views::take_exactly( rightSize );
 
 	auto yRight = yGrid
-	  | ranges::view::drop_exactly( leftSize )
-	  | ranges::view::take_exactly( rightSize );
+	  | ranges::views::drop_exactly( leftSize )
+	  | ranges::views::take_exactly( rightSize );
 
 	using Component = Table< table::Type< LinearLinear,
 					      table::search::Binary,
@@ -103,20 +103,20 @@ SCENARIO("An variant interpolation table can be constructed"){
 
       GIVEN("an overlap"){
 	auto xLeft = xGrid
-	  | ranges::view::drop_exactly( 0 )
-	  | ranges::view::take_exactly( leftSize + 1);
+	  | ranges::views::drop_exactly( 0 )
+	  | ranges::views::take_exactly( leftSize + 1);
 
 	auto yLeft = yGrid
-	  | ranges::view::drop_exactly( 0 )
-	  | ranges::view::take_exactly( leftSize + 1 );
+	  | ranges::views::drop_exactly( 0 )
+	  | ranges::views::take_exactly( leftSize + 1 );
 
 	auto xRight = xGrid
-	  | ranges::view::drop_exactly( leftSize - 1 )
-	  | ranges::view::take_exactly( rightSize );
+	  | ranges::views::drop_exactly( leftSize - 1 )
+	  | ranges::views::take_exactly( rightSize );
 
 	auto yRight = yGrid
-	  | ranges::view::drop_exactly( leftSize - 1 )
-	  | ranges::view::take_exactly( rightSize );
+	  | ranges::views::drop_exactly( leftSize - 1 )
+	  | ranges::views::take_exactly( rightSize );
 
 	using Component = Table< table::Type< LinearLinear,
 					      table::search::Binary,
