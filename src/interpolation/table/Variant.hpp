@@ -15,11 +15,11 @@ class Variant {
 
   static_assert( variant::all( std::is_same< typename TableType::Ydata,
 			                     typename TableTypes::Ydata >::value... ), "" );
-  
+
 public:
   using Xdata = typename TableType::Xdata;
   using Ydata = typename TableType::Ydata;
-  
+
 #define SIMPLE_VISIT_METHOD( name )				\
   auto name() const {						\
     return std::visit(						\
@@ -48,7 +48,7 @@ protected:
 public:
   using Xrange = std::conditional_t
     < xDistinct,
-      decltype( ranges::make_iterator_range
+      decltype( ranges::make_subrange
 		( std::declval<XVariantIterator>(),
 		  std::declval<XVariantIterator>() ) ),
       decltype( std::declval<TableType>().x() ) >;
@@ -57,7 +57,7 @@ protected:
   auto x( std::true_type ) const {
     return std::visit(
       []( auto&& core ){
-	return ranges::make_iterator_range
+	return ranges::make_subrange
 	  ( XVariantIterator( core.x().begin() ),
 	    XVariantIterator( core.x().end() ) );
       }, this->core );
@@ -69,7 +69,7 @@ protected:
 	return core.x();
       }, this->core );
   }
-  
+
 public:
   Xrange x() const {
     return this->x( std::integral_constant< bool, xDistinct >{} );
@@ -86,7 +86,7 @@ protected:
 
   using Yrange = std::conditional_t
     < yDistinct,
-      decltype( ranges::make_iterator_range
+      decltype( ranges::make_subrange
 		( std::declval<YVariantIterator>(),
 		  std::declval<YVariantIterator>() ) ),
       decltype( std::declval<TableType>().y() ) >;
@@ -94,7 +94,7 @@ protected:
   auto y( std::true_type ) const {
     return std::visit(
       []( auto&& core ){
-	return ranges::make_iterator_range
+	return ranges::make_subrange
 	  ( YVariantIterator( core.y().begin() ),
 	    YVariantIterator( core.y().end() ) );
       }, this->core );
@@ -121,7 +121,7 @@ protected:
       }, this->core );
   }
 
-public:  
+public:
   template< typename Arg >
   Variant( Arg&& arg ) : core( std::forward< Arg >( arg ) ){}
   Variant( Variant& ) = default;
@@ -130,12 +130,12 @@ public:
 
   Variant& operator=( Variant&& ) = default;
   Variant& operator=( const Variant& ) = default;
-  
+
   template< typename... Args >
   friend struct Search;
 
   auto search() const {
-    using Result = 
+    using Result =
       typename variant::Search
       < decltype( std::declval<TableType>().search() ),
 	decltype( std::declval<TableTypes>().search() )... >::Type;
@@ -144,7 +144,7 @@ public:
   }
 
   auto cachedSearch() const {
-    using Result = 
+    using Result =
       typename variant::Search
       < decltype( std::declval<TableType>().cachedSearch() ),
 	decltype( std::declval<TableTypes>().cachedSearch() )... >::Type;

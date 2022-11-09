@@ -22,7 +22,7 @@ FetchContent_Declare( hana-adapter
 
 FetchContent_Declare( header-utilities
     GIT_REPOSITORY  https://github.com/njoy/header-utilities
-    GIT_TAG         918640514e23d9adbbc7ab4fc499696e309fd054
+    GIT_TAG         cc2610fee15e255c151e8e22aca1e8b3d1a96b39
     )
 
 FetchContent_Declare( Log
@@ -30,9 +30,9 @@ FetchContent_Declare( Log
     GIT_TAG         52962b7796afe37ef1d8f7edb4bf9ecb1b868d15
     )
 
-FetchContent_Declare( range-v3-adapter
-    GIT_REPOSITORY  https://github.com/njoy/range-v3-adapter
-    GIT_TAG         252679d4737c8f755d87c0e1eed6c37394a2ec59
+FetchContent_Declare( range-v3
+    GIT_REPOSITORY  https://github.com/ericniebler/range-v3
+    GIT_TAG         4989f3e9ff2efee1852942bb9328ef121369ba02 # tag: 0.11.0
     )
 
 FetchContent_Declare( spdlog
@@ -50,6 +50,6 @@ FetchContent_MakeAvailable(
     hana-adapter
     header-utilities
     Log
-    range-v3-adapter
+    range-v3
     spdlog
     )
