@@ -1,10 +1,8 @@
 ########################################################################
 # Preamble
 ########################################################################
-
 cmake_minimum_required( VERSION 3.14 )
 project( interpolation LANGUAGES CXX )
-
 
 ########################################################################
 # Project-wide setup
@@ -13,9 +11,7 @@ project( interpolation LANGUAGES CXX )
 set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_CXX_STANDARD_REQUIRED YES )
 
-option( interpolation_unit_tests
-    "Compile the interpolation unit tests and integrate with ctest" ON
-    )
+option( interpolation.tests "Build the interpolation unit tests" OFF )
 option( strict_compile
     "Treat all warnings as errors." ON
     )
@@ -71,8 +67,7 @@ target_link_libraries( interpolation
 
 if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
 
-    # unit testing
-    if( interpolation_unit_tests )
+    if( interpolation.tests )
         include( cmake/unit_testing.cmake )
     endif()
 
