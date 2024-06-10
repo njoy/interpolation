@@ -32,10 +32,10 @@ SCENARIO("An variant interpolation table can be constructed"){
 
       bool correct;
 
-      correct = ranges::equal( myTable.x(), xGrid );
+      correct = ranges::cpp20::equal( myTable.x(), xGrid );
       REQUIRE( correct );
 
-      correct = ranges::equal( myTable.y(), yGrid );
+      correct = ranges::cpp20::equal( myTable.y(), yGrid );
       REQUIRE( correct );
 
       REQUIRE( 6.0 == myTable(2.5) );
@@ -74,10 +74,10 @@ SCENARIO("An variant interpolation table can be constructed"){
 
       bool correct;
 
-      correct = ranges::equal( myTable.x(), xGrid );
+      correct = ranges::cpp20::equal( myTable.x(), xGrid );
       REQUIRE( correct );
 
-      correct = ranges::equal( myTable.y(), yGrid );
+      correct = ranges::cpp20::equal( myTable.y(), yGrid );
       REQUIRE( correct );
 
       REQUIRE( 6.0 == myTable( 2.5 ) );

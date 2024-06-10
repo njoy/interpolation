@@ -1,3 +1,5 @@
+![Continuous Integration](https://github.com/njoy/interpolation/workflows/Continuous%20Integration/badge.svg)
+
 njoy::interpolation
 =========
 
@@ -30,7 +32,7 @@ int main(){
    * + vector<double> for the x-range
    * + double for the y-value datatype
    * + vector<double> for the y-range
-   * + binary search to determine the appropriate bin 
+   * + binary search to determine the appropriate bin
    * + prefering the left argument given coincident points
    */
   auto myTable =
@@ -98,13 +100,13 @@ int main(){
   auto viewOf = []( const auto& range ){
     return ranges::make_iterator_range( range.begin(), range.end() );
   };
-  
+
   std::vector< double > xGrid  = { 1.0, 2.0, 3.0, 4.0,  5.0 };
   std::vector< double > y1Grid = { 3.0, 5.0, 7.0, 9.0, 11.0 };
   std::vector< double > y2Grid = { 9.0, 7.0, 3.0, 5.0,  7.0 };
 
   auto partialXGrid = viewOf(xGrid) | ranges::view::drop_exactly(2);
-  std::vector< double > y3Grid = { 7.0, 5.0, 3.0 }; 
+  std::vector< double > y3Grid = { 7.0, 5.0, 3.0 };
 
   auto table1 = table::make< LinearLinear >( viewOf(xGrid), std::move(y1Grid) );
   auto table2 = table::make< LinearLinear >( viewOf(xGrid), std::move(y2Grid) );
@@ -208,7 +210,7 @@ struct Ten {
 };
 
   /* given the setup code in Example 1 */
-  
+
   auto myTable =
     table::make< LinearLinear,
                  table::domain::min::IsRuntimeConstant,

@@ -20,12 +20,12 @@ struct LogarithmicLinear : public Interpolant {
   template< typename Range >
   static void verifyYGridAssumptions( Range&& range ){
     auto it = Interpolant::findChangeOfSign( range );
-    if ( it != range.end() ){ 
+    if ( it != range.end() ){
       Log::error( "Encountered zero in function value of logarithmic-linear interpolation region" );
       Log::info( "Logarithmic-linear interpolation describes functions of the form: \n"
                  " y = a * b^(c * x)" );
       Log::info( "Functions of this form do not admit a change in sign" );
-      if ( it == ranges::prev(range.end()) ){ it = ranges::prev(it); }
+      if ( it == ranges::cpp20::prev(range.end()) ){ it = ranges::cpp20::prev(it); }
       const auto position = std::distance( range.begin(), it );
       Log::info(  "Y-value[ {} ]: {}", position, *it );
       Log::info(  "Y-value[ {} ]: {}", position + 1, *(++it) );
